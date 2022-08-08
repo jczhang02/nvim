@@ -55,15 +55,14 @@ function config.cmp()
 		},
 		sorting = {
 			comparators = {
-				require("cmp_tabnine.compare"),
-				compare.offset,
-				compare.exact,
-				compare.score,
+				cmp.config.compare.offset,
+				cmp.config.compare.exact,
+				cmp.config.compare.score,
 				require("cmp-under-comparator").under,
-				compare.kind,
-				compare.sort_text,
-				compare.length,
-				compare.order,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
 			},
 		},
 		formatting = {
@@ -115,7 +114,7 @@ function config.cmp()
 		},
 		-- You can set mappings if you want
 		mapping = cmp.mapping.preset.insert({
-			["<CR>"] = cmp.mapping.confirm({ select = true }),
+			["<CR>"] = cmp.mapping.confirm({ select = false }),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
 			["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -159,16 +158,14 @@ function config.cmp()
 		},
 		-- You should specify your *installed* sources.
 		sources = {
-			{ name = "nvim_lsp" },
-			{ name = "nvim_lua" },
-			{ name = "luasnip" },
-			{ name = "path" },
-			{ name = "spell" },
-			{ name = "tmux" },
-			{ name = "orgmode" },
-			{ name = "buffer" },
-			{ name = "latex_symbols" },
-			{ name = "cmp_tabnine" },
+			{ name = "nvim_lsp", priority = 8 },
+			{ name = "nvim_lua", priority = 7 },
+			{ name = "luasnip", priority = 6 },
+			{ name = "buffer", priority = 5 },
+			{ name = "path", priority = 3 },
+			{ name = "spell", priority = 3 },
+			{ name = "tmux", priority = 3 },
+			{ name = "cmp_tabnine", priority = 3 },
 		},
 	})
 end
@@ -276,7 +273,6 @@ function config.mason_install()
 			"stylua",
 			"black",
 			"prettier",
-			-- "eslint",
 			"bash-language-server",
 			"shellcheck",
 			"shfmt",

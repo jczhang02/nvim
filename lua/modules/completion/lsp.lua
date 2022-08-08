@@ -15,11 +15,11 @@ mason.setup()
 mason_lsp.setup({
 	ensure_installed = {
 		"efm",
-		"sumneko_lua",
 		"clangd",
 		"gopls",
-		"pyright",
+		-- "pyright",
 		"texlab",
+		"lua-language-server",
 	},
 })
 
@@ -210,21 +210,33 @@ for _, server in ipairs(mason_lsp.get_installed_servers()) do
 end
 
 -- Pyright lsp server config
+--
+-- nvim_lsp.pyright.setup({
+-- 	settings = {
+-- 		python = {
+-- 			analysis = {
+-- 				autoSearchPaths = true,
+-- 				typeCheckingMode = "off",
+-- 			},
+-- 		},
+-- 	},
+-- 	single_file_support = true,
+-- })
 
-nvim_lsp.pyright.setup({
+nvim_lsp.pylsp.setup({
+	on_attach = custom_attach,
 	settings = {
-		python = {
-			analysis = {
-				exclude = {},
-				autoSearchPaths = true,
-				typeCheckingMode = "off",
-				diagnosticMode = "workspace",
-				extraPaths = "src",
-				useLibraryCodeForTypes = true,
+		pylsp = {
+			plugins = {
+				pylint = { enabled = true, executable = "pylint" },
+				pyflakes = { enabled = false },
+				pycodestyle = { enabled = false },
+				jedi_completion = { fuzzy = true },
+				pyls_isort = { enabled = true },
+				pylsp_mypy = { enabled = true },
 			},
 		},
 	},
-	single_file_support = true,
 })
 
 -- https://github.com/vscode-langservers/vscode-html-languageserver-bin
@@ -311,6 +323,7 @@ efmls.setup({
 	tex = { formatter = latexindent },
 	bib = { formatter = latexindent },
 	zsh = { formatter = shfmt, linter = shellcheck },
+	json = { formatter = prettier },
 	-- rust = {formatter = rustfmt},
 })
 

@@ -98,7 +98,6 @@ local load_core = function()
 
 	pack.ensure_plugins()
 	neovide_config()
-	-- check_conda()
 	-- clipboard_config()
 
 	require("core.options")
@@ -108,6 +107,7 @@ local load_core = function()
 	pack.load_compile()
 
 	-- vim.cmd([[set background=light]])
+	-- vim.cmd([[colorscheme rose-pine]])
 	vim.cmd([[colorscheme catppuccin]])
 end
 

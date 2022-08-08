@@ -1,6 +1,9 @@
 local config = {}
 
 function config.vimtex()
+	vim.g.vimtex_indent_bib_enabled = 0
+	vim.g.vimtex_indent_enabled = 0
+
 	vim.g.vimtex_complete_enabled = 0
 	-- Disable imaps (using Ultisnips)
 	vim.g.vimtex_imaps_enabled = 0

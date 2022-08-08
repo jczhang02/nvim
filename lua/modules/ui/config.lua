@@ -88,7 +88,7 @@ function config.edge()
 	vim.g.edge_disable_italic_comment = 1
 	vim.g.edge_show_eob = 1
 	vim.g.edge_better_performance = 1
-	vim.g.edge_transparent_background = 1
+	vim.g.edge_transparent_background = 0
 end
 
 function config.nord()
@@ -530,7 +530,7 @@ function config.gitsigns()
 			["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
 			["n <leader>hR"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
 			["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-			["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+			["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line(full=true)<CR>',
 			-- Text objects
 			["o ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',
 			["x ih"] = ':<C-U>lua require"gitsigns".text_object()<CR>',

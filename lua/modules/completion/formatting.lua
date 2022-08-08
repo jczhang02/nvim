@@ -102,6 +102,7 @@ function M.format_filter(clients)
 			and client.name ~= "tsserver"
 			and client.name ~= "clangd"
 			and client.name ~= "texlab"
+			and client.name ~= "pylsp"
 		then
 			return status_ok and formatting_supported and client.name
 		end

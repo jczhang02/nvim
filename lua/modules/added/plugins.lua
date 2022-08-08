@@ -33,7 +33,6 @@ added["dccsillag/magma-nvim"] = {
 added["rose-pine/neovim"] = {
 	opt = false,
 	as = "rose-pine",
-	-- tag = "v1.*",
 	config = conf.rosepine,
 }
 added["MortenStabenau/matlab-vim"] = {
@@ -45,10 +44,10 @@ added["MortenStabenau/matlab-vim"] = {
 		vim.cmd([[let g:matlab_auto_start = 0]])
 	end,
 }
--- added["molleweide/LuaSnip-snippets.nvim"] = {
--- 	opt = true,
--- 	after = "LuaSnip",
--- }
+added["molleweide/LuaSnip-snippets.nvim"] = {
+	opt = true,
+	after = "LuaSnip",
+}
 added["ludovicchabant/vim-gutentags"] = {
 	opt = true,
 	ft = "tex",
@@ -79,5 +78,9 @@ added["iurimateus/luasnip-latex-snippets.nvim"] = {
 }
 added["ii14/emmylua-nvim"] = {
 	opt = true,
+}
+added["ekiim/vim-mathpix"] = {
+	opt = true,
+	ft = "tex",
 }
 return added
