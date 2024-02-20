@@ -25,7 +25,6 @@ lang["jamespeapen/Nvim-R"] = {
 
 lang["microsoft/python-type-stubs"] = {
 	lazy = true,
-	cond = false,
 }
 
 lang["gentoo/gentoo-syntax"] = {
