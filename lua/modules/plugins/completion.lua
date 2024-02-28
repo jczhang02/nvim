@@ -36,6 +36,7 @@ completion["joechrisellis/lsp-format-modifications.nvim"] = {
 }
 completion["nvimtools/none-ls.nvim"] = {
 	lazy = true,
+	commit = "bb680d752cec37949faca7a1f509e2fe67ab418a",
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("completion.null-ls"),
 	dependencies = {
