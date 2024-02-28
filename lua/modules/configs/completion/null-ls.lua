@@ -13,6 +13,8 @@ return function()
 		return args
 	end
 
+	vim.g.nonels_suppress_issue58 = true
+
 	-- Please set additional flags for the supported servers here
 	-- Don't specify any config here if you are using the default one.
 	local sources = {
