@@ -37,7 +37,6 @@ return function()
 				"markdown",
 			},
 		}),
-		btns.formatting.rustfmt,
 	}
 	require("modules.utils").load_plugin("null-ls", {
 		border = "rounded",
