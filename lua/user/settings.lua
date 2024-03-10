@@ -37,6 +37,7 @@ end
 
 settings["disabled_plugins"] = {
 	-- "jczhang02/luasnips-mathtex-snippets",
+	"nvim-tree/nvim-tree.lua",
 }
 
 settings["gui_config"] = {
