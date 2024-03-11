@@ -22,12 +22,6 @@ tool["skywind3000/asynctasks.vim"] = {
 	config = require("configs.tool.asynctask"),
 }
 
-tool["lilydjwg/fcitx.vim"] = {
-	lazy = true,
-	event = "InsertEnter",
-	config = require("configs.tool.fcitx"),
-}
-
 tool["anuvyklack/windows.nvim"] = {
 	lazy = true,
 	event = "WinNew",
@@ -64,6 +58,12 @@ tool["nvim-neo-tree/neo-tree.nvim"] = {
 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 	},
 	config = require("configs.tool.neo-tree"),
+}
+
+tool["alohaia/fcitx.nvim"] = {
+	lazy = true,
+	event = "InsertEnter",
+	config = require("configs.tool.fcitx"),
 }
 
 return tool
