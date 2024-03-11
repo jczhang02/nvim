@@ -38,7 +38,6 @@ ui["nvim-lualine/lualine.nvim"] = {
 }
 ui["zbirenbaum/neodim"] = {
 	lazy = true,
-	commit = "9477da0",
 	event = "LspAttach",
 	config = require("ui.neodim"),
 }
@@ -61,11 +60,6 @@ ui["dstein64/nvim-scrollview"] = {
 	lazy = true,
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("ui.scrollview"),
-}
-ui["edluffy/specs.nvim"] = {
-	lazy = true,
-	event = "CursorMoved",
-	config = require("ui.specs"),
 }
 
 return ui
