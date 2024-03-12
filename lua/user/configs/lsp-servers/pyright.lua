@@ -1,9 +1,9 @@
 return {
 	cmd = { "delance-langserver", "--stdio" },
-	-- cmd = { "/usr/bin/pyright-langserver", "--stdio" },
 	-- filetypes = { "python" },
 	settings = {
 		python = {
+			pythonPath = vim.fn.exepath("python"),
 			analysis = {
 				autoImportCompletions = true,
 				autoSearchPaths = true,
@@ -15,7 +15,7 @@ return {
 					functionReturnTypes = true,
 					pytestParameters = true,
 					variableTypes = true,
-					callArgumentNames = true,
+					callArgumentNames = "partial",
 				},
 			},
 		},

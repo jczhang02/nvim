@@ -11,7 +11,7 @@ return function()
 			"buffers",
 		},
 		source_selector = {
-			winbar = true, -- toggle to show selector on winbar
+			winbar = false, -- toggle to show selector on winbar
 			statusline = false, -- toggle to show selector on statusline
 			show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
 			-- of the top visible node when scrolled down.
@@ -226,9 +226,9 @@ return function()
 				},
 			},
 			follow_current_file = {
-				enabled = false, -- This will find and focus the file in the active buffer every time
+				enabled = true, -- This will find and focus the file in the active buffer every time
 				--               -- the current file is changed while the tree is open.
-				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+				leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 			},
 			group_empty_dirs = false, -- when true, empty folders will be grouped together
 			hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
@@ -236,7 +236,7 @@ return function()
 			-- "open_current",  -- netrw disabled, opening a directory opens within the
 			-- window like netrw would, regardless of window.position
 			-- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-			use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+			use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
 			-- instead of relying on nvim autocmd events.
 			window = {
 				mappings = {
