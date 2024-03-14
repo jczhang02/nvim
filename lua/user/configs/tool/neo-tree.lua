@@ -4,6 +4,20 @@ return function()
 	vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
 	vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
+	local function scandir(directory)
+		local pfile = assert(io.popen(("find '%s' -mindepth 2 -maxdepth 2 -print0"):format(directory), "r"))
+		local list = pfile:read("*a")
+		pfile:close()
+
+		local folders = {}
+
+		for filename in string.gmatch(list, "[^%z]+") do
+			table.insert(folders, filename)
+		end
+
+		return folders
+	end
+
 	require("neo-tree").setup({
 		sources = {
 			"filesystem",
@@ -206,20 +220,21 @@ return function()
 				visible = false, -- when true, they will just be displayed differently than normal items
 				hide_dotfiles = true,
 				hide_gitignored = true,
-				hide_hidden = true, -- only works on Windows for hidden files/directories
 				hide_by_name = {
-					--"node_modules"
+					"node_modules",
 				},
 				hide_by_pattern = { -- uses glob style patterns
-					--"*.meta",
-					--"*/src/*/tsconfig.json",
+					"*.meta",
+					"*/src/*/tsconfig.json",
 				},
 				always_show = { -- remains visible even if other settings would normally hide it
-					--".gitignored",
+					".gitignored",
+					"/home/jc/dev/dotfiles/zsh/.config/",
+					-- scandir("/home/jc/dev/dotfiles"),
 				},
 				never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-					--".DS_Store",
-					--"thumbs.db"
+					".DS_Store",
+					"thumbs.db",
 				},
 				never_show_by_pattern = { -- uses glob style patterns
 					--".null-ls_*",
@@ -236,7 +251,7 @@ return function()
 			-- "open_current",  -- netrw disabled, opening a directory opens within the
 			-- window like netrw would, regardless of window.position
 			-- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-			use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+			use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
 			-- instead of relying on nvim autocmd events.
 			window = {
 				mappings = {
