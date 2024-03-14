@@ -66,4 +66,25 @@ tool["alohaia/fcitx.nvim"] = {
 	config = require("configs.tool.fcitx"),
 }
 
+tool["robitx/gp.nvim"] = {
+	lazy = true,
+	cmd = {
+		"GpChatNew",
+		"GpChatPaste",
+		"GpChatToggle",
+		"GpChatRespond",
+		"GpChatRespond",
+		"GpChatDelete",
+	},
+	config = require("configs.tool.gp"),
+}
+
+tool["wintermute-cell/gitignore.nvim"] = {
+	lazy = true,
+	requires = {
+		"nvim-telescope/telescope.nvim", -- optional: for multi-select
+	},
+	ft = "gitignore",
+}
+
 return tool
