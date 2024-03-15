@@ -8,6 +8,7 @@ return function()
 	vim.g.vimtex_imaps_enabled = 0
 	-- Do not open pdfviwer on compile
 	vim.g.vimtex_view_automatic = 0
+	vim.g.vimtex_syntax_enabled = 0
 	-- Disable conceal
 	vim.g.vimtex_syntax_conceal = {
 		accents = 0,
