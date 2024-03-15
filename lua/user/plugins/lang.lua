@@ -1,8 +1,7 @@
 local lang = {}
 
 lang["lervag/vimtex"] = {
-	lazy = true,
-	ft = { "tex", "bib" },
+	lazy = false,
 	config = require("configs.lang.vimtex"),
 }
 
