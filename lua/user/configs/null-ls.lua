@@ -8,5 +8,6 @@ return {
 			extra_args = { "-style={BasedOnStyle: LLVM, IndentWidth: 2}" },
 		}),
 		require("user.configs.formatters.bibtex-tidy"),
+		require("user.configs.formatters.xmlformat"),
 	},
 }
