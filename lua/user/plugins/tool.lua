@@ -89,4 +89,10 @@ tool["wintermute-cell/gitignore.nvim"] = {
 	},
 }
 
+tool["askfiy/nvim-picgo"] = {
+	lazy = true,
+	ft = { "markdown" },
+	config = require("configs.tool.picgo"),
+}
+
 return tool
