@@ -95,4 +95,26 @@ tool["askfiy/nvim-picgo"] = {
 	config = require("configs.tool.picgo"),
 }
 
+tool["epwalsh/obsidian.nvim"] =  {
+  version = "*",  -- recommended, use latest release instead of latest commit
+  lazy = true,
+  ft = "markdown",
+  dependencies = {
+    -- Required.
+    "nvim-lua/plenary.nvim",
+
+    -- see below for full list of optional dependencies 👇
+  },
+  opts = {
+    workspaces = {
+
+      {
+        name = "knowledge_system",
+        path = "~/Documents/collection/ob_knowledge_system",
+      },
+    },
+
+    -- see below for full list of options 👇
+  },
+}
 return tool
