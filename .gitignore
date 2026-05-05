@@ -1,0 +1,11 @@
+lazy-lock.json
+nixos
+nixos/*
+scripts
+scripts/*
+lazy-lock.json
+README.md
+flake.nix
+tutor
+tutor/*
+.omc/
