@@ -12,6 +12,9 @@ return {
       vim.g.vimtex_imaps_enabled = 0       -- LuaSnip handles snippets
       vim.g.vimtex_complete_enabled = 1
     end,
+    keys = {
+      { "<leader>ll", "<cmd>VimtexCompile<CR>", ft = { "tex", "bib" }, desc = "Vimtex compile" },
+    },
   },
   {
     "iurimateus/luasnip-latex-snippets.nvim",

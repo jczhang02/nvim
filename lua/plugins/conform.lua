@@ -7,6 +7,13 @@ return {
     keys = {
       { "<leader>cf", function() require("conform").format({ async = true, lsp_format = "fallback" }) end,
         mode = { "n", "v" }, desc = "Format buffer/range" },
+      { "<A-S-f>",    function() require("conform").format({ async = true, lsp_format = "fallback" }) end,
+        mode = { "n", "v" }, desc = "Format buffer/range" },
+      { "<A-f>", function()
+        local s = require("config.settings")
+        s.format_on_save = not s.format_on_save
+        vim.notify("Format on save: " .. tostring(s.format_on_save), vim.log.levels.INFO)
+      end, desc = "Toggle format on save" },
     },
     opts = {
       formatters_by_ft = {

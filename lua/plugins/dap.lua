@@ -14,6 +14,17 @@ return {
       { "<leader>dr", function() require("dap").repl.toggle() end,         desc = "REPL toggle" },
       { "<leader>du", function() require("dapui").toggle() end,            desc = "DAP UI toggle" },
       { "<leader>dC", function() require("dapui").close() end,             desc = "DAP UI close" },
+      -- Legacy F-key bindings
+      { "<F6>",  function() require("dap").continue() end,                 desc = "Debug: Continue" },
+      { "<F7>",  function() require("dap").terminate() end,                desc = "Debug: Stop" },
+      { "<F8>",  function() require("dap").toggle_breakpoint() end,        desc = "Debug: Toggle breakpoint" },
+      { "<F9>",  function() require("dap").step_into() end,                desc = "Debug: Step into" },
+      { "<F10>", function() require("dap").step_out() end,                 desc = "Debug: Step out" },
+      { "<F11>", function() require("dap").step_over() end,                desc = "Debug: Step over" },
+      -- Legacy leader bindings
+      { "<leader>dx", function() require("dap").run_to_cursor() end,       desc = "Run to cursor" },
+      { "<leader>dL", function() require("dap").run_last() end,            desc = "Run last" },
+      { "<leader>dR", function() require("dap").repl.open() end,           desc = "Open REPL" },
     },
     dependencies = {
       {
