@@ -16,7 +16,7 @@ M.background = "light"
 M.transparent_background = false
 
 M.lsp_inlayhints = false
-M.lsp_deps = { "bashls", "clangd", "gopls", "html", "jsonls", "lua_ls", "ruff", "ts_ls", "zuban" }
+M.lsp_deps = { "bashls", "clangd", "gopls", "html", "jsonls", "lua_ls", "pyright", "ruff", "ts_ls" }
 M.dap_deps = { "codelldb", "delve", "python" }
 M.treesitter_deps = {
   "bash", "c", "cpp", "css", "go", "gomod", "html", "javascript",

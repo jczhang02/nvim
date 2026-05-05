@@ -72,7 +72,39 @@ return {
       })
 
       vim.lsp.config("ts_ls", { single_file_support = true })
-      vim.lsp.config("zuban", {})
+      vim.lsp.config("pyright", {
+        cmd = { "delance-langserver", "--stdio" },
+        settings = {
+          pyright = {
+            disableOrganizeImports = true,           -- ruff handles imports
+            disableTaggedHints = false,
+          },
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              diagnosticMode = "workspace",
+              typeCheckingMode = "standard",
+              useLibraryCodeForTypes = true,
+              diagnosticSeverityOverrides = {
+                deprecateTypingAliases = false,
+              },
+              inlayHints = {
+                callArgumentNames    = "partial",
+                functionReturnTypes  = true,
+                pytestParameters     = true,
+                variableTypes        = true,
+              },
+              stubPath = vim.fn.stdpath("data") .. "/site/lazy/python-type-stubs",
+            },
+          },
+        },
+        capabilities = vim.tbl_deep_extend("force", capabilities, {
+          textDocument = {
+            publishDiagnostics = { tagSupport = { valueSet = { 2 } } },
+            hover = { contentFormat = { "plaintext" }, dynamicRegistration = true },
+          },
+        }),
+      })
       vim.lsp.config("bashls", {})
       vim.lsp.config("html", {})
       vim.lsp.config("jsonls", {})
