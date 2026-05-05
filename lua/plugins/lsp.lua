@@ -1,10 +1,20 @@
 -- ~/.config/nvim-new/lua/plugins/lsp.lua
 return {
   {
+    "mason-org/mason.nvim",
+    cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate", "MasonLog" },
+    build = ":MasonUpdate",
+    opts = {},
+    keys = {
+      { "<leader>cm", "<cmd>Mason<CR>",       desc = "Mason UI" },
+      { "<leader>cM", "<cmd>MasonUpdate<CR>", desc = "Mason update all" },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { "mason-org/mason.nvim", config = true, build = ":MasonUpdate" },
+      "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
       { "folke/neoconf.nvim", cmd = "Neoconf", priority = 100 },
       "Jint-lzxy/lsp_signature.nvim",
