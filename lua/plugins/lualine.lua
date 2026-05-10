@@ -6,7 +6,7 @@ return {
     dependencies = "nvim-tree/nvim-web-devicons",
     opts = {
       options = {
-        theme = "catppuccin",
+        theme = "catppuccin-latte",
         globalstatus = true,
         component_separators = { left = "│", right = "│" },
         section_separators   = { left = "",  right = ""  },
