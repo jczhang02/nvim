@@ -43,7 +43,7 @@ return {
         { section = "startup" },
       },
     },
-    explorer     = { enabled = true, replace_netrw = true },
+    explorer     = { enabled = false },
     indent       = { enabled = true, scope = { enabled = true } },
     input        = { enabled = true },
     notifier     = { enabled = true, timeout = 3000, style = "compact" },
@@ -53,7 +53,6 @@ return {
       sources = {
         files     = { hidden = true, ignored = false },
         grep      = { hidden = true },
-        explorer  = { hidden = true },
       },
       win = {
         input = {
@@ -84,8 +83,6 @@ return {
     { "<leader>fu", function() Snacks.picker.undo() end,                   desc = "Undo tree" },
     { "<leader>fp", function() Snacks.picker.projects() end,               desc = "Projects" },
     { "<leader>fk", function() Snacks.picker.keymaps() end,                desc = "Keymaps" },
-    { "<leader>e",  function() Snacks.explorer() end,                      desc = "Explorer" },
-    { "<C-n>",      function() Snacks.explorer() end,                      desc = "Explorer toggle" },
     { "<C-\\>",     function() Snacks.terminal.toggle() end,               mode = { "n", "t" }, desc = "Terminal toggle" },
     { "<C-\\>",     "<Esc><Cmd>lua Snacks.terminal.toggle()<CR>",          mode = "i",          desc = "Terminal toggle" },
     { "<A-\\>",     function() Snacks.terminal.toggle(nil, { win = { position = "right" } }) end, mode = { "n", "t" }, desc = "Terminal toggle (vertical)" },

@@ -14,7 +14,7 @@ return {
         show_buffer_close_icons = true,
         separator_style = "thin",
         offsets = {
-          { filetype = "snacks_layout_box", text = "Explorer", text_align = "center", separator = true },
+          { filetype = "neo-tree", text = "Explorer", text_align = "center", separator = true },
         },
       },
     },

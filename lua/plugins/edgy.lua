@@ -11,7 +11,14 @@ return {
         { ft = "spectre_panel",size = { height = 0.4 } },
       },
       left = {
-        { title = "Explorer", ft = "snacks_layout_box", size = { width = 0.2 } },
+        {
+          title = "Neo-Tree",
+          ft = "neo-tree",
+          filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
+          size = { width = 0.2 },
+        },
+        { title = "Neo-Tree Buffers",    ft = "neo-tree", filter = function(buf) return vim.b[buf].neo_tree_source == "buffers" end },
+        { title = "Neo-Tree Git Status", ft = "neo-tree", filter = function(buf) return vim.b[buf].neo_tree_source == "git_status" end },
       },
       right = {},
     },
