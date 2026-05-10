@@ -42,7 +42,6 @@ lua/
     └── tex.lua + ...
 snips/                   VSCode-format snippet pack (c/cpp/go/latex)
 templates/               file templates
-docs/superpowers/        spec + implementation plan
 stylua.toml / .luarc.json
 ```
 
@@ -98,11 +97,6 @@ Edit `lua/config/settings.lua` for:
 - `lsp_inlayhints`
 
 Per-project overrides via `.neoconf.json` (handled by `neoconf.nvim`).
-
-## Documentation
-
-- Design spec: [docs/superpowers/specs/2026-05-04-nvim-0.12-fresh-config-design.md](docs/superpowers/specs/2026-05-04-nvim-0.12-fresh-config-design.md)
-- Implementation plan: [docs/superpowers/plans/2026-05-04-nvim-0.12-fresh-config.md](docs/superpowers/plans/2026-05-04-nvim-0.12-fresh-config.md)
 
 ## License
 
