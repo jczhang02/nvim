@@ -187,6 +187,10 @@ return {
 
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					if client then
+						if require("config.settings").server_formatting_block_list[client.name] then
+							client.server_capabilities.documentFormattingProvider = false
+							client.server_capabilities.documentRangeFormattingProvider = false
+						end
 						pcall(require("lsp_signature").on_attach, {
 							bind = true,
 							hint_enable = false,

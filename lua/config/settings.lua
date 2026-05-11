@@ -3,7 +3,9 @@ local M = {}
 M.format_on_save = true
 M.format_timeout = 1000
 M.format_notify = true
+M.format_modifications_only = false
 M.formatter_block_list = { lua = false }
+M.server_formatting_block_list = { clangd = true, lua_ls = true, ruff = false, ts_ls = true }
 M.format_disabled_dirs = { "~/format_disabled_dir" }
 
 M.diagnostics_virtual_lines = true

@@ -46,7 +46,7 @@ opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.termguicolors = true
 opt.background = require("config.settings").background
-opt.completeopt = { "menu", "menuone", "noselect" }
+opt.completeopt = { "fuzzy", "menu", "menuone", "noselect", "popup" }
 opt.shortmess:append("WIcC")
 opt.laststatus = 3
 opt.showtabline = 2
@@ -62,5 +62,10 @@ opt.foldenable = true
 
 opt.spelllang = { "en_us" }
 opt.spelloptions = "camel"
+
+opt.textwidth = 80
+opt.synmaxcol = 2500
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --hidden --vimgrep --smart-case --"
 
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
