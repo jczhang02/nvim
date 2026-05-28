@@ -23,6 +23,10 @@ return {
       "ribru17/blink-cmp-spell",
       "mgalliou/blink-cmp-tmux",
       "erooke/blink-cmp-latex",
+      {
+        "xzbdmw/colorful-menu.nvim",
+        opts = {},
+      },
     },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -35,8 +39,26 @@ return {
         ["<C-d>"]   = { "scroll_documentation_up" },
         ["<C-f>"]   = { "scroll_documentation_down" },
         ["<C-w>"]   = { "hide" },
-        ["<Tab>"]   = { "select_next", "snippet_forward", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+        ["<Tab>"]   = {
+          function(cmp)
+            if cmp.snippet_active({ direction = 1 }) then
+              return cmp.snippet_forward()
+            elseif cmp.is_visible() then
+              return cmp.select_next()
+            end
+          end,
+          "fallback",
+        },
+        ["<S-Tab>"] = {
+          function(cmp)
+            if cmp.snippet_active({ direction = -1 }) then
+              return cmp.snippet_backward()
+            elseif cmp.is_visible() then
+              return cmp.select_prev()
+            end
+          end,
+          "fallback",
+        },
         ["<CR>"]    = { "accept", "fallback" },
       },
       appearance = {
@@ -62,11 +84,17 @@ return {
           winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:PmenuSel",
           scrollbar = false,
           draw = {
-            columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" } },
+            columns = { { "kind_icon" }, { "label", gap = 1 }, { "source_name" } },
             components = {
               label = {
-                width = { max = 80 },
+                width = { fill = true, max = 80 },
                 ellipsis = true,
+                text = function(ctx)
+                  return require("colorful-menu").blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require("colorful-menu").blink_components_highlight(ctx)
+                end,
               },
             },
           },
