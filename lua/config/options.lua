@@ -10,11 +10,16 @@ opt.relativenumber = true
 opt.signcolumn = "yes"
 opt.cursorline = true
 opt.scrolloff = 8
+opt.sidescroll = 1
 opt.sidescrolloff = 8
+opt.smoothscroll = true
+opt.mousescroll = "ver:3,hor:6"
 opt.wrap = false
 opt.linebreak = true
 opt.breakindent = true
+opt.breakindentopt = "shift:2,min:20"
 opt.showbreak = "↪ "
+opt.formatoptions:append("mM")
 opt.list = true
 opt.listchars = { tab = "→ ", trail = "·", nbsp = "␣", extends = "❯", precedes = "❮" }
 opt.fillchars = { eob = " ", fold = " ", foldopen = "▾", foldsep = "│", foldclose = "▸" }
@@ -60,7 +65,7 @@ opt.foldlevelstart = 99
 opt.foldcolumn = "0"
 opt.foldenable = true
 
-opt.spelllang = { "en_us" }
+opt.spelllang = { "en_us", "cjk" }
 opt.spelloptions = "camel"
 
 opt.textwidth = 80
@@ -69,3 +74,19 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --hidden --vimgrep --smart-case --"
 
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+
+-- GUI font: match Ghostty (Iosevka Nerd Font Mono @ 12pt).
+opt.guifont = "Iosevka_Nerd_Font_Mono,Symbols_Nerd_Font,LXGW_WenKai_Mono:h12"
+
+if vim.g.neovide then
+  vim.g.neovide_scale_factor = 1.0
+  vim.g.neovide_hide_mouse_when_typing = true
+  vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_cursor_trail_size = 0
+  vim.g.neovide_padding_top = 4
+  vim.g.neovide_padding_bottom = 0
+  vim.g.neovide_padding_left = 4
+  vim.g.neovide_padding_right = 4
+  vim.g.neovide_refresh_rate = 60
+  vim.g.neovide_refresh_rate_idle = 5
+end

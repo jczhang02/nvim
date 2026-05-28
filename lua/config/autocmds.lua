@@ -41,6 +41,20 @@ au("FileType", {
 })
 
 au("FileType", {
+  group = aug("CJKWrap", { clear = true }),
+  pattern = { "markdown", "text", "tex" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+    vim.opt_local.textwidth = 0
+    vim.opt_local.formatoptions:remove("t")
+    vim.opt_local.joinspaces = false
+    vim.opt_local.spell = false
+  end,
+})
+
+au("FileType", {
   group = aug("TSStart", { clear = true }),
   callback = function(args)
     local ok, lang = pcall(vim.treesitter.language.get_lang, vim.bo[args.buf].filetype)
