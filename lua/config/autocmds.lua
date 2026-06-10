@@ -57,7 +57,10 @@ au("FileType", {
 au("FileType", {
   group = aug("TSStart", { clear = true }),
   callback = function(args)
-    local ok, lang = pcall(vim.treesitter.language.get_lang, vim.bo[args.buf].filetype)
+    local ft = vim.bo[args.buf].filetype
+    -- vimtex owns highlight for LaTeX (math zones, conceals, package-aware)
+    if ft == "tex" or ft == "latex" or ft == "plaintex" then return end
+    local ok, lang = pcall(vim.treesitter.language.get_lang, ft)
     if ok and lang then
       pcall(vim.treesitter.language.add, lang)
       pcall(vim.treesitter.start, args.buf, lang)

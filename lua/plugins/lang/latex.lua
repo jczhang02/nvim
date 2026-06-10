@@ -5,10 +5,26 @@ return {
     ft = { "tex", "bib" },
     cmd = { "VimtexInverseSearch" },
     init = function()
+      -- Wayland: vimtex uses xdotool (X11-only) to locate/raise the viewer
+      -- window. Native-Wayland zathura is invisible to xdotool, triggering
+      -- "Viewer cannot find Zathura window ID!" on every forward search.
+      -- Force zathura onto XWayland so xdotool can find + raise it. nvim is a
+      -- TUI (no GDK), only the spawned zathura inherits this.
+      if vim.env.WAYLAND_DISPLAY and vim.env.WAYLAND_DISPLAY ~= "" then
+        vim.env.GDK_BACKEND = "x11"
+      end
+
       vim.g.vimtex_view_method = "zathura"
       vim.g.vimtex_view_forward_search_on_start = 1
       vim.g.vimtex_view_automatic = 1
       vim.g.vimtex_view_zathura_check_libsynctex = 0
+
+      -- Suppress the cosmetic "Viewer cannot find Zathura window ID!" warning.
+      -- On Wayland/XWayland the window often isn't mapped within vimtex's
+      -- hardcoded 500ms lookup timer, so the warning fires even though synctex
+      -- works and xwin_id resolves on the next forward search. Still logged to
+      -- :VimtexLog.
+      vim.g.vimtex_log_ignore = { "Viewer cannot find" }
 
       vim.g.vimtex_compiler_method = "latexmk"
       vim.g.vimtex_compiler_latexmk = {
