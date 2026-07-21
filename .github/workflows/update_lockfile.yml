@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0 # Required to count the commits
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Commit via REST Contents API (server-signed ??Verified)
         if: ${{ steps.diff.outputs.changed == 'true' && steps.new-commits.outputs.new_commit_count > 0 }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           CHANGED_FILES: ${{ steps.diff.outputs.changed_files }}
         with:
