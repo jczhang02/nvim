@@ -112,6 +112,7 @@ settings changes.
 | `colorscheme` | string | `catppuccin-latte` | Colorscheme applied after Catppuccin setup |
 | `background` | `light` or `dark` | `light` | Neovim background option |
 | `transparent_background` | boolean | `false` | Catppuccin transparency |
+| `border_style` | shared plugin border token | `single` | Configured floating windows; keep `single` for cross-plugin compatibility |
 | `lsp_inlayhints` | boolean | `false` | Enables supported LSP inlay hints on attach |
 | `lsp_servers` | list of server names | Bash, C/C++, Go, HTML, JSON, Lua, Python, Ruff, TypeScript | Native LSP clients enabled at startup |
 | `mason_dap_adapters` | list of adapter names | `codelldb` | Adapters ensured by mason-nvim-dap |
@@ -134,7 +135,8 @@ plugin ownership settings.
 - persistent undo under `stdpath("state")/undo`;
 - swap files enabled, backups disabled, and confirmation for destructive exits;
 - right and below split defaults;
-- a global statusline, visible bufferline, popup limits, and true color;
+- a global statusline, visible bufferline, single-line straight-corner floating
+  borders, popup limits, and true color;
 - branch-aware session options without runtime paths;
 - GUI and Neovide defaults for the local font and animation policy.
 

@@ -9,6 +9,7 @@ M.server_formatting_block_list = { clangd = true, lua_ls = true, ts_ls = true }
 M.colorscheme = "catppuccin-latte"
 M.background = "light"
 M.transparent_background = false
+M.border_style = "single"
 
 M.lsp_inlayhints = false
 M.lsp_servers = { "bashls", "clangd", "gopls", "html", "jsonls", "lua_ls", "pyright", "ruff", "ts_ls" }

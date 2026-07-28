@@ -96,7 +96,7 @@ Diagnostics use:
 - signs and underlines;
 - severity sorting;
 - no update during insert mode;
-- rounded floats with source names when several sources exist;
+- single-line, straight-corner floats with source names when several sources exist;
 - no native virtual text or virtual lines.
 
 Trouble and Snacks provide lists and pickers. tiny-inline-diagnostic provides
@@ -137,7 +137,7 @@ source list includes it. Add `"tmux"` to a default or per-filetype list before
 describing tmux text as a completion source.
 
 Blink's experimental signature interface is disabled. `ray-x/lsp_signature.nvim`
-registers rounded signature help without virtual parameter hints. `gs` and
+registers straight-corner signature help without virtual parameter hints. `gs` and
 insert-mode `<C-k>` call Neovim signature help.
 
 ### Snippet sources

@@ -1,3 +1,5 @@
+local border_style = require("config.settings").border_style
+
 return {
 	{
 		"folke/which-key.nvim",
@@ -5,6 +7,7 @@ return {
 		opts = {
 			preset = "modern",
 			delay = 300,
+			win = { border = border_style },
 			icons = { mappings = false },
 			spec = {
 				{ "<leader>f", group = "find/picker" },

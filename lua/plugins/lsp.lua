@@ -1,3 +1,5 @@
+local border_style = require("config.settings").border_style
+
 return {
 	{
 		"mason-org/mason.nvim",
@@ -19,7 +21,7 @@ return {
 				opts = {
 					bind = true,
 					hint_enable = false,
-					handler_opts = { border = "rounded" },
+					handler_opts = { border = border_style },
 				},
 			},
 		},
@@ -119,7 +121,7 @@ return {
 				underline = true,
 				update_in_insert = false,
 				severity_sort = true,
-				float = { border = "rounded", source = "if_many" },
+				float = { border = border_style, source = "if_many" },
 			})
 
 			-- LspAttach: keymaps + inlay hints

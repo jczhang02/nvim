@@ -1,3 +1,5 @@
+local border_style = require("config.settings").border_style
+
 return {
 	{
 		"saghen/blink.cmp",
@@ -107,7 +109,7 @@ return {
 					auto_show = true,
 					auto_show_delay_ms = 200,
 					window = {
-						border = "rounded",
+						border = border_style,
 						winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
 					},
 				},

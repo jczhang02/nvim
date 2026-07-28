@@ -1,5 +1,49 @@
 local aug = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
+local border_style = require("config.settings").border_style
+
+local function border_char(segment)
+	return type(segment) == "table" and segment[1] or segment
+end
+
+local function has_rounded_corners(border)
+	return type(border) == "table"
+		and border_char(border[1]) == "╭"
+		and border_char(border[3]) == "╮"
+		and border_char(border[5]) == "╯"
+		and border_char(border[7]) == "╰"
+end
+
+local function preferred_border(border)
+	if border_style ~= "single" then
+		return border_style
+	end
+
+	local square = vim.deepcopy(border)
+	for index, corner in pairs({ [1] = "┌", [3] = "┐", [5] = "┘", [7] = "└" }) do
+		if type(square[index]) == "table" then
+			square[index][1] = corner
+		else
+			square[index] = corner
+		end
+	end
+	return square
+end
+
+au("WinNew", {
+	group = aug("SquareFloatBorders", { clear = true }),
+	callback = function()
+		-- Best-effort fallback for plugin-internal windows that hard-code rounded borders.
+		vim.schedule(function()
+			for _, win in ipairs(vim.api.nvim_list_wins()) do
+				local config = vim.api.nvim_win_get_config(win)
+				if config.relative ~= "" and has_rounded_corners(config.border) then
+					pcall(vim.api.nvim_win_set_config, win, { border = preferred_border(config.border) })
+				end
+			end
+		end)
+	end,
+})
 
 au("TextYankPost", {
 	group = aug("HighlightYank", { clear = true }),

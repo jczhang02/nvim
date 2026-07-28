@@ -1,4 +1,5 @@
 local opt = vim.opt
+local settings = require("config.settings")
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -51,7 +52,8 @@ opt.confirm = true
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.termguicolors = true
-opt.background = require("config.settings").background
+opt.background = settings.background
+opt.winborder = settings.border_style
 opt.completeopt = { "fuzzy", "menu", "menuone", "noselect", "popup" }
 opt.shortmess:append("WIcC")
 opt.laststatus = 3

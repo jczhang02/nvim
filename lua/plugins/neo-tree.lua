@@ -1,3 +1,5 @@
+local border_style = require("config.settings").border_style
+
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
@@ -19,7 +21,7 @@ return {
 		close_if_last_window = true,
 		enable_git_status = true,
 		enable_diagnostics = true,
-		popup_border_style = "rounded",
+		popup_border_style = border_style,
 		sources = { "filesystem", "buffers", "git_status" },
 		source_selector = {
 			winbar = true,

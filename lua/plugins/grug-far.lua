@@ -1,8 +1,14 @@
+local border_style = require("config.settings").border_style
+
 return {
 	{
 		"MagicDuck/grug-far.nvim",
 		cmd = "GrugFar",
-		opts = {},
+		opts = {
+			helpWindow = { border = border_style },
+			historyWindow = { border = border_style },
+			previewWindow = { border = border_style },
+		},
 		keys = {
 			{ "<leader>sr", "<cmd>GrugFar<CR>", desc = "Search & replace" },
 			-- Legacy <leader>S* aliases (capital S for grug-far)
