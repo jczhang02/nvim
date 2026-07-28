@@ -1,156 +1,166 @@
-<h1 align="center">Neovim Configuration</h1>
+<h1 align="center">Neovim configuration</h1>
 
-<p align="center">A personal Neovim 0.12.4+ configuration for editing, review, diagnostics, and debugging.</p>
+<p align="center">
+  A Linux-first Neovim 0.12.4+ setup for editing, Git review, diagnostics,
+  debugging, and Pi sessions in tmux.
+</p>
 
-## Role
+<p align="center">
+  <a href="https://github.com/jczhang02/nvim/actions/workflows/lint_code.yml"><img alt="lint code" src="https://github.com/jczhang02/nvim/actions/workflows/lint_code.yml/badge.svg"></a>
+  <a href="https://github.com/jczhang02/nvim/actions/workflows/style_check.yml"><img alt="style check" src="https://github.com/jczhang02/nvim/actions/workflows/style_check.yml/badge.svg"></a>
+  <a href="https://github.com/jczhang02/nvim/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/github/license/jczhang02/nvim"></a>
+  <img alt="Neovim 0.12.4+" src="https://img.shields.io/badge/Neovim-0.12.4%2B-57A143?logo=neovim&logoColor=white">
+</p>
 
-Neovim is the human-controlled review surface in an agent-assisted workflow:
+<p align="center">
+  <a href="./wiki/Home.md">Wiki</a> ·
+  <a href="./wiki/Getting-Started.md">Install</a> ·
+  <a href="./wiki/Features-and-Workflows.md">Workflows</a> ·
+  <a href="./wiki/Keymap-Reference.md">Keymaps</a> ·
+  <a href="./wiki/Troubleshooting.md">Troubleshooting</a>
+</p>
 
-- Neovim owns precise editing, Git diff review, diagnostics, tests, and debugging.
-- AI CLIs run in persistent tmux panes through `sidekick.nvim`.
-- Parallel tasks use one Git worktree, one Neovim instance, and one AI CLI session per task.
+## What this is
 
-Sidekick is configured for CLI integration only. Copilot LSP and Next Edit Suggestions (NES) are disabled.
+This is a personal configuration, not a general Neovim distribution. It targets
+Linux, tmux, Git worktrees, and external development tools managed outside
+Neovim.
 
-## Highlights
+Neovim is the human-controlled surface in the agent workflow. Pi runs in a
+persistent tmux pane through Sidekick and edits the current worktree. Neovim
+keeps responsibility for precise edits, diagnostics, diff review, formatting,
+and debugging.
 
-- Native LSP through `vim.lsp.config` and `vim.lsp.enable`.
-- `blink.cmp` completion with LuaSnip, spell, tmux, and LaTeX sources.
-- Project-aware formatting with `conform.nvim`; linting with `nvim-lint`.
-- Git review with Gitsigns, Diffview, Fugitive, and lazygit.
-- Diagnostics and navigation with Trouble, Glance, quickfix, and `nvim-bqf`.
-- Debugging with `nvim-dap`, DAP UI, Delve, debugpy, and codelldb.
-- File navigation with Snacks picker and Neo-tree.
-- Persistent, branch-aware sessions with `persisted.nvim`.
-- LaTeX editing with VimTeX and LuaSnip. Unrestricted shell escape is not enabled globally.
+| Layer | Responsibility |
+|---|---|
+| Neovim | Editing, navigation, diagnostics, review, and debugging |
+| Sidekick | File, selection, and context handoff between Neovim and a CLI |
+| tmux | Persistent panes and process lifetime |
+| Pi | Agent execution in the current worktree |
+| Git worktree | Task isolation for concurrent work |
 
-## Layout
+Sidekick is CLI-only. Copilot LSP, Next Edit Suggestions, embedded chat panels,
+and a Neovim MCP server are intentionally absent.
 
-```text
-init.lua
-lua/
-├── config/
-│   ├── autocmds.lua
-│   ├── icons.lua
-│   ├── keymaps.lua
-│   ├── lazy.lua
-│   ├── options.lua
-│   └── settings.lua
-├── plugins/
-│   ├── lang/
-│   └── *.lua
-└── snippets/
-    └── tex.lua
-snips/
-templates/
-lazy-lock.json
-stylua.toml
-```
+## Capabilities
 
-Each plugin has one specification under `lua/plugins/` or `lua/plugins/lang/`.
+| Area | Current implementation | Details |
+|---|---|---|
+| Completion | Blink, LuaSnip, LSP, path, buffer, spell, and LaTeX sources | [Language tooling](./wiki/Language-Tooling.md#completion-and-snippets) |
+| LSP and diagnostics | Native `vim.lsp`, Snacks pickers, Trouble, and tiny inline diagnostics | [Language tooling](./wiki/Language-Tooling.md#language-intelligence) |
+| Formatting and linting | Conform with project-owned rules; nvim-lint for Vim and shell files | [Language tooling](./wiki/Language-Tooling.md#formatters-and-linters) |
+| Git | Gitsigns, diffview+, Fugitive, and lazygit | [Workflows](./wiki/Features-and-Workflows.md#git-review) |
+| Debugging | nvim-dap, nvim-dap-view, codelldb, Delve, and debugpy | [Workflows](./wiki/Features-and-Workflows.md#debugging) |
+| Navigation | Snacks picker, Neo-tree, Flash, Dropbar, Bufferline, and smart-splits | [Workflows](./wiki/Features-and-Workflows.md#files-buffers-and-navigation) |
+| Documents | VimTeX, render-markdown, custom snippets, and clipboard image paste | [Workflows](./wiki/Features-and-Workflows.md#documents-and-images) |
+| Agent handoff | Sidekick with a persistent 50% vertical Pi pane in tmux | [Agent workflow](./wiki/Features-and-Workflows.md#sidekick-pi-and-worktrees) |
 
-## Requirements
+## Quick start
 
-Required:
-
-- Neovim 0.12.4 or newer
-- Git
-- A C compiler and `make` for Treesitter parsers
-- A Nerd Font
-- `rg`, `fd`, and `lazygit`
-- `tmux`, `pi`, `lsof`, and `ps` for Sidekick CLI integration
-
-Language tools are supplied through mise or the system `PATH`. Mason does not modify `PATH`; it only manages codelldb for this configuration.
-
-Expected tools include:
-
-```text
-LSP:       bash-language-server, clangd, delance-langserver, gopls,
-           lua-language-server, ruff, typescript-language-server,
-           vscode-html-language-server, vscode-json-language-server
-Format:    stylua, prettier, ruff, goimports, gofumpt, rustfmt,
-           clang-format, shfmt, latexindent, bibtex-tidy, xmlformat
-Lint:      shellcheck, vint
-DAP:       codelldb, dlv, debugpy-adapter
-```
-
-When `/usr/bin/mise` is available, `init.lua` imports `mise env --json` before loading plugins so Neovim and shell agents use the same tools.
-
-## Install
+Protect an existing configuration before cloning:
 
 ```bash
-git clone git@github.com:jczhang02/nvim.git ~/.config/nvim
-nvim --headless "+Lazy! install" +qa
+mv ~/.config/nvim ~/.config/nvim.backup
+```
+
+Install this repository and restore the locked plugin set:
+
+```bash
+git clone https://github.com/jczhang02/nvim.git ~/.config/nvim
+nvim --headless "+Lazy! restore" +qa
 nvim
 ```
 
-The first interactive launch installs the configured Treesitter parsers. Install the external language tools before enabling their corresponding features.
+`Lazy! restore` checks out every plugin at the commit in `lazy-lock.json`. The
+first interactive launch installs the configured Treesitter parsers. DAP loads
+Mason later and installs only codelldb.
 
-## Sidekick and Pi
+The normal editing experience expects:
 
-Start Neovim from the root of the current Git worktree. Sidekick derives its persistent session from the CLI name and Neovim's current working directory.
+- Neovim 0.12.4 or newer
+- Git, a C compiler, and `make`
+- a Nerd Font
+- `rg` and `fd` for search and file discovery
 
-| Key | Action |
+Sidekick, language servers, formatters, debuggers, LaTeX, lazygit, and clipboard
+images have separate feature dependencies. See
+[Getting started](./wiki/Getting-Started.md#requirements-by-feature) before
+setting up a new machine.
+
+## First commands
+
+Leader is `<Space>` and local leader is `,`.
+
+| Key or command | Purpose |
 |---|---|
-| `<leader>ii` | Start or attach Pi in a 50% vertical tmux split |
-| `<leader>is` | Select an installed AI CLI or existing session |
-| `<leader>if` | Send the current file reference |
-| `<leader>iv` | Send the visual selection |
-| `<leader>it` | Send the current context |
-| `<leader>ip` | Select a Sidekick prompt |
-| `<leader>id` | Detach the current CLI pane without ending its process |
+| `<leader>?` | Show mappings for the current buffer |
+| `<leader>fk` | Search all registered keymaps |
+| `<leader>ff` / `<leader>fg` | Find files / search text |
+| `<leader>e` | Toggle Neo-tree |
+| `<leader>cf` | Format the current buffer or selection |
+| `<leader>gd` | Open diffview+ |
+| `<leader>ii` | Start or attach Pi in tmux |
+| `:checkhealth` | Inspect Neovim and plugin health |
+| `:Lazy` / `:Mason` | Inspect plugins / codelldb |
 
-Different worktree directories produce separate Pi sessions. Exit Pi itself when the session should be terminated. Sidekick watches loaded buffer directories and triggers `:checktime` after CLI writes; `FocusGained` and `BufEnter` provide a fallback for changes made outside Sidekick.
+The complete reference is in [Keymaps](./wiki/Keymap-Reference.md). Runtime
+Which-key and the Snacks keymap picker remain the final authority when a plugin
+changes a mapping.
 
-## Keymap Groups
+## Documentation
 
-Leader is `<Space>`. Use `<leader>?` or `<leader>fk` to inspect active mappings.
+The repository keeps its Wiki source in `wiki/` so documentation changes can be
+reviewed with configuration changes.
 
-| Prefix | Group |
+| Page | Use it for |
 |---|---|
-| `<leader>a` | AsyncRun / AsyncTasks |
-| `<leader>b` | buffers |
-| `<leader>c` | code and formatting |
-| `<leader>d` | DAP |
-| `<leader>f` | files and picker |
-| `<leader>g` | Git |
-| `<leader>i` | Sidekick / AI CLI |
-| `<leader>l` | LSP |
-| `<leader>n` | notifications and scratch buffers |
-| `<leader>p` | persisted sessions |
-| `<leader>x` | Trouble and quickfix |
+| [Home](./wiki/Home.md) | Documentation map and configuration boundaries |
+| [Getting started](./wiki/Getting-Started.md) | Installation, requirements, first launch, update, and removal |
+| [Architecture and customization](./wiki/Architecture-and-Customization.md) | Startup sequence, state ownership, settings, plugin catalog, and extension recipes |
+| [Features and workflows](./wiki/Features-and-Workflows.md) | Daily editing, Git, DAP, sessions, Sidekick, Markdown, and LaTeX |
+| [Language tooling](./wiki/Language-Tooling.md) | LSP, parser, formatter, linter, DAP, completion, and snippet matrix |
+| [Keymap reference](./wiki/Keymap-Reference.md) | Repository-defined global, plugin, and buffer-local mappings |
+| [Troubleshooting](./wiki/Troubleshooting.md) | Symptom-based checks and known health noise |
+| [Development and maintenance](./wiki/Development-and-Maintenance.md) | Lock updates, CI, documentation checks, and Wiki publishing |
 
-`<C-h/j/k/l>` moves across Neovim and tmux panes. `<A-h/j/k/l>` resizes them.
+GitHub's separate Wiki repository is not initialized. The version-controlled
+files in `wiki/` are the canonical source and are ready for one-way publishing
+when the Wiki is enabled.
 
-## Formatting
+## Repository map
 
-Conform uses repository-owned configuration first, including `stylua.toml`, `.clang-format`, and Prettier configuration. Personal rules do not override project rules.
+```text
+init.lua                         startup and environment import
+lua/config/                      options, settings, keymaps, autocmds, Lazy
+lua/plugins/                     plugin specifications and integrations
+lua/snippets/tex.lua             custom LuaSnip LaTeX snippets
+snips/                           repository-owned VS Code snippets
+wiki/                            version-controlled Wiki source
+scripts/check_docs.py            source and rendered-Wiki consistency check
+scripts/render_wiki.py           GitHub Wiki publication renderer
+lazy-lock.json                   exact plugin revisions
+stylua.toml                      Lua formatting policy
+.github/workflows/               Lua, startup, style, and documentation CI
+```
 
-- `<leader>cf` or `<A-S-f>` formats the current buffer or visual range.
-- `<A-f>` disables or re-enables format-on-save for the current buffer only.
-- Global defaults and disabled directories live in `lua/config/settings.lua`.
-
-## Customization
-
-`lua/config/settings.lua` contains the intentionally supported settings:
-
-- colorscheme and background
-- enabled LSP servers
-- Mason-managed DAP adapters
-- Treesitter parsers
-- format-on-save defaults and exclusions
-- LSP inlay hints
-
-Per-project LSP overrides are loaded by `neoconf.nvim` from `.neoconf.json`.
-
-## Checks
+## Local checks
 
 ```bash
 stylua --check --config-path=stylua.toml .
 luacheck . --std luajit --max-line-length 150 --no-config --globals vim Snacks
+python scripts/check_docs.py
 nvim --headless +qa
 ```
 
+For a locked install or recovery, run:
+
+```bash
+nvim --headless "+Lazy! restore" +qa
+```
+
+See [Development and maintenance](./wiki/Development-and-Maintenance.md) before
+updating Neovim, plugin revisions, or the Wiki publication.
+
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

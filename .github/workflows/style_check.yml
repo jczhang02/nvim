@@ -12,3 +12,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: 2.4.1
           args: --check --config-path=stylua.toml .
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check documentation
+        run: python scripts/check_docs.py
