@@ -1,5 +1,5 @@
 local map = function(mode, lhs, rhs, desc)
-  vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
+	vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
 end
 
 map("i", "jk", "<Esc>", "Escape insert")
@@ -35,9 +35,15 @@ map("v", "p", '"_dP', "Paste without overwriting register")
 map({ "n", "v" }, "<leader>y", '"+y', "Yank to system clipboard")
 map("n", "<leader>Y", '"+Y', "Yank line to system clipboard")
 
-map("n", "[d", function() vim.diagnostic.goto_prev() end, "Prev diagnostic")
-map("n", "]d", function() vim.diagnostic.goto_next() end, "Next diagnostic")
-map("n", "<leader>cd", function() vim.diagnostic.open_float() end, "Diagnostic float")
+map("n", "[d", function()
+	vim.diagnostic.jump({ count = -1 })
+end, "Prev diagnostic")
+map("n", "]d", function()
+	vim.diagnostic.jump({ count = 1 })
+end, "Next diagnostic")
+map("n", "<leader>cd", function()
+	vim.diagnostic.open_float()
+end, "Diagnostic float")
 
 -- Save & quit
 map("n", "<C-q>", "<cmd>wq<CR>", "Save and quit")
@@ -85,21 +91,25 @@ map("n", "<A-s>", "<cmd>SudaWrite<CR>", "Sudo write")
 
 -- Plenary profile (legacy user)
 map("n", "<leader>hpb", function()
-  local ok, p = pcall(require, "plenary.profile")
-  if ok then p.start("profile.log", { flame = true }) end
+	local ok, p = pcall(require, "plenary.profile")
+	if ok then
+		p.start("profile.log", { flame = true })
+	end
 end, "Profile start")
 map("n", "<leader>hps", function()
-  local ok, p = pcall(require, "plenary.profile")
-  if ok then p.stop() end
+	local ok, p = pcall(require, "plenary.profile")
+	if ok then
+		p.stop()
+	end
 end, "Profile stop")
 
 -- Lazy package manager (legacy `<leader>P*` to avoid conflict with persisted)
-map("n", "<leader>Ph", "<cmd>Lazy<CR>",         "Lazy show")
-map("n", "<leader>Ps", "<cmd>Lazy sync<CR>",    "Lazy sync")
-map("n", "<leader>Pu", "<cmd>Lazy update<CR>",  "Lazy update")
+map("n", "<leader>Ph", "<cmd>Lazy<CR>", "Lazy show")
+map("n", "<leader>Ps", "<cmd>Lazy sync<CR>", "Lazy sync")
+map("n", "<leader>Pu", "<cmd>Lazy update<CR>", "Lazy update")
 map("n", "<leader>Pi", "<cmd>Lazy install<CR>", "Lazy install")
-map("n", "<leader>Pl", "<cmd>Lazy log<CR>",     "Lazy log")
-map("n", "<leader>Pc", "<cmd>Lazy check<CR>",   "Lazy check")
+map("n", "<leader>Pl", "<cmd>Lazy log<CR>", "Lazy log")
+map("n", "<leader>Pc", "<cmd>Lazy check<CR>", "Lazy check")
 map("n", "<leader>Pp", "<cmd>Lazy profile<CR>", "Lazy profile")
 map("n", "<leader>Pr", "<cmd>Lazy restore<CR>", "Lazy restore")
-map("n", "<leader>Px", "<cmd>Lazy clean<CR>",   "Lazy clean")
+map("n", "<leader>Px", "<cmd>Lazy clean<CR>", "Lazy clean")

@@ -1,102 +1,155 @@
-# nvim
+<h1 align="center">Neovim Configuration</h1>
 
-Personal Neovim configuration for Neovim 0.11+ / 0.12. Folke-style flat layout, one plugin per file under `lua/plugins/`.
+<p align="center">A personal Neovim 0.12.4+ configuration for editing, review, diagnostics, and debugging.</p>
+
+## Role
+
+Neovim is the human-controlled review surface in an agent-assisted workflow:
+
+- Neovim owns precise editing, Git diff review, diagnostics, tests, and debugging.
+- AI CLIs run in persistent tmux panes through `sidekick.nvim`.
+- Parallel tasks use one Git worktree, one Neovim instance, and one AI CLI session per task.
+
+Sidekick is configured for CLI integration only. Copilot LSP and Next Edit Suggestions (NES) are disabled.
 
 ## Highlights
 
-- **Native LSP** — `vim.lsp.config` + `vim.lsp.enable` (Neovim 0.11+) wired through `nvim-lspconfig`, `mason.nvim`, `mason-lspconfig.nvim`, and `neoconf.nvim`.
-- **Rust-fast completion** — `blink.cmp` with LuaSnip, `friendly-snippets`, plus dedicated providers for spell, tmux, and LaTeX symbols.
-- **Modern formatting & linting** — `conform.nvim` (format-on-save) and `nvim-lint`.
-- **Snacks consolidation** — `snacks.nvim` provides picker, explorer, dashboard, notifier, terminal, indent guides, big-file handling, scope, scratch, and more (replaces telescope, nvim-tree, nvim-notify, alpha, toggleterm, indent-blankline, faster.nvim, mini.cursorword, nvim-bufdel).
-- **Treesitter (`main` branch)** — registered through `vim.treesitter.start` with native APIs; `textobjects`, `context`, `vim-matchup`, `nvim-ts-autotag`, `rainbow-delimiters`, and `ts-context-commentstring` all included.
-- **Catppuccin Latte** — light by default; flip via `lua/config/settings.lua`.
-- **Languages** — Lua, Python (ruff + zuban), Go (gopls), Rust (rustaceanvim + crates), C/C++ (clangd), TypeScript/JavaScript (ts_ls), Shell (bashls + shellcheck), HTML/JSON, LaTeX (vimtex), Markdown (render-markdown), CSV, ebuild (Gentoo).
-- **DAP** — `nvim-dap` + `nvim-dap-ui` + `mason-nvim-dap` (codelldb / delve / debugpy).
-- **CJK aware** — `im-select.nvim` (fcitx5) + `pangu.vim` for CJK whitespace normalization.
+- Native LSP through `vim.lsp.config` and `vim.lsp.enable`.
+- `blink.cmp` completion with LuaSnip, spell, tmux, and LaTeX sources.
+- Project-aware formatting with `conform.nvim`; linting with `nvim-lint`.
+- Git review with Gitsigns, Diffview, Fugitive, and lazygit.
+- Diagnostics and navigation with Trouble, Glance, quickfix, and `nvim-bqf`.
+- Debugging with `nvim-dap`, DAP UI, Delve, debugpy, and codelldb.
+- File navigation with Snacks picker and Neo-tree.
+- Persistent, branch-aware sessions with `persisted.nvim`.
+- LaTeX editing with VimTeX and LuaSnip. Unrestricted shell escape is not enabled globally.
 
 ## Layout
 
-```
+```text
 init.lua
 lua/
 ├── config/
-│   ├── options.lua      vim.opt + globals + provider toggles
-│   ├── keymaps.lua      global non-plugin keymaps
-│   ├── autocmds.lua     global autocmds (yank highlight, last-pos, mkdir, q-to-close, ts-start)
-│   ├── lazy.lua         lazy.nvim bootstrap + import "plugins"
-│   ├── settings.lua     user-tunable flags (colorscheme, lsp_deps, treesitter_deps, etc.)
-│   └── icons.lua        icon table consumed by blink and lualine
-├── plugins/             one plugin per file (40 specs)
-│   ├── snacks.lua / blink.lua / lsp.lua / treesitter.lua  (large)
-│   ├── conform.lua / nvim-lint.lua / glance.lua / tiny-inline-diagnostic.lua
-│   ├── bufferline.lua / lualine.lua / dropbar.lua / edgy.lua / neoscroll.lua /
-│   │   which-key.lua / trouble.lua / todo-comments.lua
-│   ├── flash.lua / nvim-surround.lua / autoclose.lua / mini-align.lua /
-│   │   hlslens.lua / vim-cool.lua / vim-sleuth.lua / smart-splits.lua /
-│   │   grug-far.lua
-│   ├── gitsigns.lua / diffview.lua / fugitive.lua / dap.lua
-│   ├── nvim-bqf.lua / highlight-colors.lua / pastify.lua / persisted.lua /
-│   │   suda.lua / debugprint.lua / asyncrun.lua / im-select.lua / pangu.lua
-│   └── lang/{rust,latex,markdown,python,csv,gentoo}.lua
-└── snippets/            LuaSnip from_lua source root
-    └── tex.lua + ...
-snips/                   VSCode-format snippet pack (c/cpp/go/latex)
-templates/               file templates
-stylua.toml / .luarc.json
+│   ├── autocmds.lua
+│   ├── icons.lua
+│   ├── keymaps.lua
+│   ├── lazy.lua
+│   ├── options.lua
+│   └── settings.lua
+├── plugins/
+│   ├── lang/
+│   └── *.lua
+└── snippets/
+    └── tex.lua
+snips/
+templates/
+lazy-lock.json
+stylua.toml
 ```
+
+Each plugin has one specification under `lua/plugins/` or `lua/plugins/lang/`.
 
 ## Requirements
 
-- Neovim 0.11+ (0.12 preferred)
-- `git`, `make`, a C compiler (treesitter parsers)
-- A Nerd Font (default: JetBrainsMono Nerd Font)
-- Optional binaries via `mason.nvim`: lua-language-server, ruff, gopls, clangd, typescript-language-server, bash-language-server, html-lsp, json-lsp, stylua, prettier, shfmt, latexindent, codelldb, delve, debugpy, shellcheck, vint
-- Outside Mason: `rust-analyzer` (rustup), `zuban` (`pip install zuban`), `bibtex-tidy`, `xmlformat`, `beautysh`
+Required:
+
+- Neovim 0.12.4 or newer
+- Git
+- A C compiler and `make` for Treesitter parsers
+- A Nerd Font
+- `rg`, `fd`, and `lazygit`
+- `tmux`, `pi`, `lsof`, and `ps` for Sidekick CLI integration
+
+Language tools are supplied through mise or the system `PATH`. Mason does not modify `PATH`; it only manages codelldb for this configuration.
+
+Expected tools include:
+
+```text
+LSP:       bash-language-server, clangd, delance-langserver, gopls,
+           lua-language-server, ruff, typescript-language-server,
+           vscode-html-language-server, vscode-json-language-server
+Format:    stylua, prettier, ruff, goimports, gofumpt, rustfmt,
+           clang-format, shfmt, latexindent, bibtex-tidy, xmlformat
+Lint:      shellcheck, vint
+DAP:       codelldb, dlv, debugpy-adapter
+```
+
+When `/usr/bin/mise` is available, `init.lua` imports `mise env --json` before loading plugins so Neovim and shell agents use the same tools.
 
 ## Install
 
 ```bash
 git clone git@github.com:jczhang02/nvim.git ~/.config/nvim
-nvim --headless -c 'Lazy! sync' -c 'qa'
-nvim --headless -c 'MasonInstall lua-language-server ruff gopls clangd typescript-language-server bash-language-server stylua prettier shfmt' -c 'qa'
+nvim --headless "+Lazy! install" +qa
+nvim
 ```
 
-The first interactive launch installs treesitter parsers and remaining mason packages on demand.
+The first interactive launch installs the configured Treesitter parsers. Install the external language tools before enabling their corresponding features.
 
-## Keymaps
+## Sidekick and Pi
 
-Leader is `<Space>`. Discover live with `<leader>?` (which-key buffer) or `<leader>fk` (snacks picker). Group prefixes:
+Start Neovim from the root of the current Git worktree. Sidekick derives its persistent session from the CLI name and Neovim's current working directory.
+
+| Key | Action |
+|---|---|
+| `<leader>ii` | Start or attach Pi in a 50% vertical tmux split |
+| `<leader>is` | Select an installed AI CLI or existing session |
+| `<leader>if` | Send the current file reference |
+| `<leader>iv` | Send the visual selection |
+| `<leader>it` | Send the current context |
+| `<leader>ip` | Select a Sidekick prompt |
+| `<leader>id` | Detach the current CLI pane without ending its process |
+
+Different worktree directories produce separate Pi sessions. Exit Pi itself when the session should be terminated. Sidekick watches loaded buffer directories and triggers `:checktime` after CLI writes; `FocusGained` and `BufEnter` provide a fallback for changes made outside Sidekick.
+
+## Keymap Groups
+
+Leader is `<Space>`. Use `<leader>?` or `<leader>fk` to inspect active mappings.
 
 | Prefix | Group |
 |---|---|
-| `<leader>f` | find / picker (snacks) |
-| `<leader>l` / `<leader>lp` | LSP / peek (glance) |
-| `<leader>d` | DAP / debug |
-| `<leader>g` | git (gitsigns / diffview / fugitive) |
-| `<leader>b` | buffer |
-| `<leader>w` | window |
-| `<leader>t` | terminal / tab |
-| `<leader>x` | trouble / quickfix |
-| `<leader>s` | search / replace (grug-far / todo) |
-| `<leader>c` | code (format / diagnostic) |
-| `<leader>r` | refactor / rename |
-| `<leader>n` | notify / scratch |
-| `<leader>p` | pastify / persisted |
-| `<leader>a` | asyncrun / asynctasks |
+| `<leader>a` | AsyncRun / AsyncTasks |
+| `<leader>b` | buffers |
+| `<leader>c` | code and formatting |
+| `<leader>d` | DAP |
+| `<leader>f` | files and picker |
+| `<leader>g` | Git |
+| `<leader>i` | Sidekick / AI CLI |
+| `<leader>l` | LSP |
+| `<leader>n` | notifications and scratch buffers |
+| `<leader>p` | persisted sessions |
+| `<leader>x` | Trouble and quickfix |
 
-Movement: `<C-h/j/k/l>` window jump (smart-splits), `<A-h/j/k/l>` resize, `<S-h>` / `<S-l>` buffer cycle, `s` / `S` flash jump / treesitter, `]h` / `[h` git hunk, `]d` / `[d` diagnostic, `]t` / `[t` todo.
+`<C-h/j/k/l>` moves across Neovim and tmux panes. `<A-h/j/k/l>` resizes them.
 
-## Customizing
+## Formatting
 
-Edit `lua/config/settings.lua` for:
-- `colorscheme` — any catppuccin variant (`catppuccin-latte`, `catppuccin-mocha`, etc.)
-- `background` — `light` or `dark`
-- `lsp_deps` / `dap_deps` / `treesitter_deps` — bootstrap install lists
-- `format_on_save` / `format_disabled_dirs` / `formatter_block_list`
-- `diagnostics_virtual_lines` / `diagnostics_level`
-- `lsp_inlayhints`
+Conform uses repository-owned configuration first, including `stylua.toml`, `.clang-format`, and Prettier configuration. Personal rules do not override project rules.
 
-Per-project overrides via `.neoconf.json` (handled by `neoconf.nvim`).
+- `<leader>cf` or `<A-S-f>` formats the current buffer or visual range.
+- `<A-f>` disables or re-enables format-on-save for the current buffer only.
+- Global defaults and disabled directories live in `lua/config/settings.lua`.
+
+## Customization
+
+`lua/config/settings.lua` contains the intentionally supported settings:
+
+- colorscheme and background
+- enabled LSP servers
+- Mason-managed DAP adapters
+- Treesitter parsers
+- format-on-save defaults and exclusions
+- LSP inlay hints
+
+Per-project LSP overrides are loaded by `neoconf.nvim` from `.neoconf.json`.
+
+## Checks
+
+```bash
+stylua --check --config-path=stylua.toml .
+luacheck . --std luajit --max-line-length 150 --no-config --globals vim Snacks
+nvim --headless +qa
+```
 
 ## License
 

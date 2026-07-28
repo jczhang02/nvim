@@ -1,6 +1,0 @@
-scripts merge=user
-scripts/* merge=user
-lazy-lock.json merge=user
-README.md merge=user
-tutor merge=user
-tutor/* merge=user

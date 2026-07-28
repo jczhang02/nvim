@@ -1,10 +1,9 @@
--- ~/.config/nvim-new/lua/plugins/lsp.lua
 return {
 	{
 		"mason-org/mason.nvim",
 		cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate", "MasonLog" },
 		build = ":MasonUpdate",
-		opts = {},
+		opts = { PATH = "skip" },
 		keys = {
 			{ "<leader>cm", "<cmd>Mason<CR>", desc = "Mason UI" },
 			{ "<leader>cM", "<cmd>MasonUpdate<CR>", desc = "Mason update all" },
@@ -14,18 +13,11 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"mason-org/mason.nvim",
-			"mason-org/mason-lspconfig.nvim",
 			{ "folke/neoconf.nvim", cmd = "Neoconf", priority = 100 },
 			"Jint-lzxy/lsp_signature.nvim",
 		},
 		config = function()
 			require("neoconf").setup()
-			require("mason").setup()
-			require("mason-lspconfig").setup({
-				ensure_installed = require("config.settings").lsp_deps,
-				automatic_installation = true,
-			})
 
 			local has_blink, blink = pcall(require, "blink.cmp")
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -112,12 +104,10 @@ return {
 			vim.lsp.config("html", {})
 			vim.lsp.config("jsonls", {})
 
-			vim.lsp.enable(require("config.settings").lsp_deps)
+			vim.lsp.enable(require("config.settings").lsp_servers)
 
-			-- diagnostics
 			vim.diagnostic.config({
-				virtual_lines = require("config.settings").diagnostics_virtual_lines and { current_line = true }
-					or false,
+				virtual_lines = false,
 				virtual_text = false,
 				signs = true,
 				underline = true,
@@ -154,16 +144,16 @@ return {
 						Snacks.picker.lsp_symbols()
 					end, "Toggle outline (picker)")
 					map("g[", function()
-						vim.diagnostic.goto_prev()
+						vim.diagnostic.jump({ count = -1 })
 					end, "Prev diagnostic")
 					map("g]", function()
-						vim.diagnostic.goto_next()
+						vim.diagnostic.jump({ count = 1 })
 					end, "Next diagnostic")
 					map("gci", vim.lsp.buf.incoming_calls, "Incoming calls")
 					map("gco", vim.lsp.buf.outgoing_calls, "Outgoing calls")
 					map("gt", "<cmd>Trouble diagnostics toggle<CR>", "Toggle trouble list")
 					map("K", vim.lsp.buf.hover, "Hover")
-					map("<C-k>", vim.lsp.buf.signature_help, "Signature help", { "i", "n" })
+					map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
 					map("<leader>rn", vim.lsp.buf.rename, "Rename")
 					map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "v" })
 					map("<leader>li", "<cmd>LspInfo<CR>", "LSP info")
@@ -183,7 +173,7 @@ return {
 						if ok then
 							tid.toggle()
 						end
-					end, "Toggle virtual lines")
+					end, "Toggle inline diagnostics")
 
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					if client then

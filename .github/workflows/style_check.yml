@@ -1,4 +1,5 @@
 name: style check
+
 on: [push, pull_request]
 
 jobs:
@@ -6,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: JohnnyMorganz/stylua-action@v4
+      - uses: JohnnyMorganz/stylua-action@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          version: latest
+          version: 2.4.1
           args: --check --config-path=stylua.toml .

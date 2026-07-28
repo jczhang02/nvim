@@ -2,7 +2,7 @@ local opt = vim.opt
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
-vim.g.loaded_python_provider = 0
+vim.g.loaded_python3_provider = 0
 vim.g.loaded_node_provider = 0
 
 opt.number = true
@@ -41,7 +41,8 @@ opt.splitbelow = true
 opt.updatetime = 200
 opt.timeoutlen = 300
 
-opt.swapfile = false
+opt.autoread = true
+opt.swapfile = true
 opt.backup = false
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("state") .. "/undo"
@@ -79,14 +80,14 @@ opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "glob
 opt.guifont = "Iosevka_Nerd_Font_Mono,Symbols_Nerd_Font,LXGW_WenKai_Mono:h12"
 
 if vim.g.neovide then
-  vim.g.neovide_scale_factor = 1.0
-  vim.g.neovide_hide_mouse_when_typing = true
-  vim.g.neovide_cursor_animation_length = 0
-  vim.g.neovide_cursor_trail_size = 0
-  vim.g.neovide_padding_top = 4
-  vim.g.neovide_padding_bottom = 0
-  vim.g.neovide_padding_left = 4
-  vim.g.neovide_padding_right = 4
-  vim.g.neovide_refresh_rate = 60
-  vim.g.neovide_refresh_rate_idle = 5
+	vim.g.neovide_scale_factor = 1.0
+	vim.g.neovide_hide_mouse_when_typing = true
+	vim.g.neovide_cursor_animation_length = 0
+	vim.g.neovide_cursor_trail_size = 0
+	vim.g.neovide_padding_top = 4
+	vim.g.neovide_padding_bottom = 0
+	vim.g.neovide_padding_left = 4
+	vim.g.neovide_padding_right = 4
+	vim.g.neovide_refresh_rate = 60
+	vim.g.neovide_refresh_rate_idle = 5
 end
