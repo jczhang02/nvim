@@ -1,7 +1,25 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
-		cmd = { "DapToggleBreakpoint", "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" },
+		cmd = {
+			"DapToggleBreakpoint",
+			"DapContinue",
+			"DapStepOver",
+			"DapStepInto",
+			"DapStepOut",
+			"DapTerminate",
+			"DapViewOpen",
+			"DapViewClose",
+			"DapViewHover",
+			"DapViewToggle",
+			"DapViewVirtualTextEnable",
+			"DapViewVirtualTextDisable",
+			"DapViewVirtualTextToggle",
+			"DapViewWatch",
+			"DapViewJump",
+			"DapViewShow",
+			"DapViewNavigate",
+		},
 		keys = {
 			{
 				"<leader>dc",
@@ -59,20 +77,21 @@ return {
 				end,
 				desc = "REPL toggle",
 			},
+			{ "<leader>du", "<cmd>DapViewToggle<CR>", desc = "DAP view toggle" },
+			{ "<leader>dC", "<cmd>DapViewClose!<CR>", desc = "DAP view close" },
+			{ "<leader>dh", "<cmd>DapViewHover<CR>", desc = "DAP hover" },
 			{
-				"<leader>du",
+				"<leader>dh",
 				function()
-					require("dapui").toggle()
+					local expr = require("dap-view.util.exprs").get_current_expr()
+					require("dap-view").hover(expr)
 				end,
-				desc = "DAP UI toggle",
+				mode = "v",
+				desc = "DAP hover selection",
 			},
-			{
-				"<leader>dC",
-				function()
-					require("dapui").close()
-				end,
-				desc = "DAP UI close",
-			},
+			{ "<leader>dw", "<cmd>DapViewWatch<CR>", desc = "DAP watch" },
+			{ "<leader>dw", ":DapViewWatch<CR>", mode = "v", desc = "DAP watch selection" },
+			{ "<leader>dv", "<cmd>DapViewVirtualTextToggle<CR>", desc = "DAP virtual text" },
 			-- Legacy F-key bindings
 			{
 				"<F6>",
@@ -141,25 +160,13 @@ return {
 		},
 		dependencies = {
 			{
-				"rcarriga/nvim-dap-ui",
-				dependencies = "nvim-neotest/nvim-nio",
-				config = function()
-					local dapui = require("dapui")
-					dapui.setup()
-					local dap = require("dap")
-					dap.listeners.before.attach.dapui_config = function()
-						dapui.open()
-					end
-					dap.listeners.before.launch.dapui_config = function()
-						dapui.open()
-					end
-					dap.listeners.before.event_terminated.dapui_config = function()
-						dapui.close()
-					end
-					dap.listeners.before.event_exited.dapui_config = function()
-						dapui.close()
-					end
-				end,
+				"igorlfs/nvim-dap-view",
+				version = "1.*",
+				opts = {
+					auto_toggle = true,
+					winbar = { controls = { enabled = true } },
+					virtual_text = { enabled = true, position = "inline" },
+				},
 			},
 			{
 				"jay-babu/mason-nvim-dap.nvim",

@@ -14,7 +14,14 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{ "folke/neoconf.nvim", cmd = "Neoconf", priority = 100 },
-			"Jint-lzxy/lsp_signature.nvim",
+			{
+				"ray-x/lsp_signature.nvim",
+				opts = {
+					bind = true,
+					hint_enable = false,
+					handler_opts = { border = "rounded" },
+				},
+			},
 		},
 		config = function()
 			require("neoconf").setup()
@@ -89,7 +96,6 @@ return {
 								pytestParameters = true,
 								variableTypes = true,
 							},
-							stubPath = vim.fn.stdpath("data") .. "/site/lazy/python-type-stubs",
 						},
 					},
 				},
@@ -116,25 +122,27 @@ return {
 				float = { border = "rounded", source = "if_many" },
 			})
 
-			-- LspAttach: keymaps + signature + inlay hint
+			-- LspAttach: keymaps + inlay hints
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(ev)
 					local buf = ev.buf
 					local map = function(lhs, rhs, desc, mode)
 						vim.keymap.set(mode or "n", lhs, rhs, { buffer = buf, silent = true, desc = desc })
 					end
-					map("gd", "<cmd>Glance definitions<CR>", "Peek definition")
+					map("gd", vim.lsp.buf.definition, "Go to definition")
 					map("gD", function()
 						Snacks.picker.lsp_definitions()
-					end, "Go to definition")
+					end, "Pick definitions")
 					map("gi", function()
 						Snacks.picker.lsp_implementations()
-					end, "Go to implementation")
-					map("gm", "<cmd>Glance implementations<CR>", "Peek implementations")
+					end, "Pick implementations")
+					map("gm", vim.lsp.buf.implementation, "Go to implementation")
 					map("gy", function()
 						Snacks.picker.lsp_type_definitions()
-					end, "Go to type definition")
-					map("gh", "<cmd>Glance references<CR>", "Peek references")
+					end, "Pick type definitions")
+					map("gh", function()
+						Snacks.picker.lsp_references()
+					end, "Pick references")
 					map("gr", vim.lsp.buf.rename, "Rename")
 					map("gR", vim.lsp.buf.rename, "Rename (project)")
 					map("ga", vim.lsp.buf.code_action, "Code action", { "n", "v" })
@@ -174,6 +182,18 @@ return {
 							tid.toggle()
 						end
 					end, "Toggle inline diagnostics")
+					map("<leader>lpd", function()
+						Snacks.picker.lsp_definitions()
+					end, "Pick definitions")
+					map("<leader>lpr", function()
+						Snacks.picker.lsp_references()
+					end, "Pick references")
+					map("<leader>lpi", function()
+						Snacks.picker.lsp_implementations()
+					end, "Pick implementations")
+					map("<leader>lpt", function()
+						Snacks.picker.lsp_type_definitions()
+					end, "Pick type definitions")
 
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					if client then
@@ -181,11 +201,6 @@ return {
 							client.server_capabilities.documentFormattingProvider = false
 							client.server_capabilities.documentRangeFormattingProvider = false
 						end
-						pcall(require("lsp_signature").on_attach, {
-							bind = true,
-							hint_enable = false,
-							handler_opts = { border = "rounded" },
-						}, buf)
 						if
 							client.server_capabilities.inlayHintProvider and require("config.settings").lsp_inlayhints
 						then

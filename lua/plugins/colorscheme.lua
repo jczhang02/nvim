@@ -20,7 +20,6 @@ return {
 			flash = true,
 			neogit = false,
 			dap = true,
-			dap_ui = true,
 			diffview = true,
 			lsp_trouble = true,
 			rainbow_delimiters = true,

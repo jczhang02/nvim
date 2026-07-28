@@ -89,18 +89,12 @@ map("t", "<Esc><Esc>", [[<C-\><C-n>]], "Terminal: normal mode")
 -- Suda (sudo write)
 map("n", "<A-s>", "<cmd>SudaWrite<CR>", "Sudo write")
 
--- Plenary profile (legacy user)
+-- Snacks profiler (legacy user bindings)
 map("n", "<leader>hpb", function()
-	local ok, p = pcall(require, "plenary.profile")
-	if ok then
-		p.start("profile.log", { flame = true })
-	end
+	Snacks.profiler.start()
 end, "Profile start")
 map("n", "<leader>hps", function()
-	local ok, p = pcall(require, "plenary.profile")
-	if ok then
-		p.stop()
-	end
+	Snacks.profiler.stop()
 end, "Profile stop")
 
 -- Lazy package manager (legacy `<leader>P*` to avoid conflict with persisted)
