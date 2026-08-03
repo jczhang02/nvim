@@ -11,7 +11,7 @@ restores the exact plugin lock.
 Other Unix-like systems may run the core editor, but several integrations are
 Linux-specific:
 
-- `/usr/bin/mise` is the only path used for automatic mise environment import.
+- `~/.local/share/mise/shims` is prepended to Neovim's `PATH` for external tools.
 - Sidekick expects tmux plus `lsof` and `ps`.
 - input-method switching uses `fcitx5-remote` when available.
 - the LaTeX viewer workflow uses Zathura, XWayland, `xdotool`, `/proc`, and
@@ -123,19 +123,19 @@ Parser and codelldb installation may continue briefly. Inspect progress with
 
 ## Tool environment
 
-At startup, `init.lua` checks the fixed path `/usr/bin/mise`. When that file is
-executable, Neovim imports `mise env --json` before loading plugins. This keeps
-Neovim and shell-launched agents on the same `PATH`.
+At startup, `init.lua` prepends the default mise shims directory,
+`~/.local/share/mise/shims`, to `PATH`. Neovim does not execute mise or import
+the complete shell environment. Each shim selects the configured tool and its
+environment when Neovim invokes it, including when Neovide starts from a GUI.
 
-If mise is installed elsewhere, one of these must be true:
+If `MISE_DATA_DIR` or `XDG_DATA_HOME` moves mise data somewhere else, adjust the
+shim path in `init.lua` or start Neovim from a shell that already provides the
+required tools.
 
-- the shell already exports every required tool before Neovim starts;
-- `/usr/bin/mise` points to the installed binary;
-- `init.lua` is adjusted to the local path.
-
-The machine used to develop this config keeps its mise tool list in
-`~/.config/mise/config.toml`. That file is outside this repository. A clone must
-supply equivalent tools through its own mise configuration or system packages.
+The machine used to develop this config tracks its mise tool list in the parent
+dotfiles repository under `mise/.config/mise`. A standalone clone of this
+Neovim repository must supply equivalent tools through its own mise
+configuration or system packages.
 
 Mason uses `PATH = "skip"`. It will not prepend its bin directory or shadow
 mise/system executables. The one exception is codelldb, whose absolute Mason

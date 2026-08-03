@@ -122,9 +122,11 @@ Compare paths:
 :echo exepath('ruff')
 ```
 
-`init.lua` imports mise only from `/usr/bin/mise`. An interactive shell may have
-additional startup logic that Neovim does not receive when launched from a GUI.
-Start Neovim from that shell or fix the mise path/import policy.
+`init.lua` prepends `~/.local/share/mise/shims` so GUI launches do not depend on
+interactive shell startup. Check that the expected shim exists and that the
+tool is selected in mise. If `MISE_DATA_DIR` or `XDG_DATA_HOME` is customized,
+update the path in `init.lua` or start Neovim from a shell that already provides
+the tool.
 
 ### Mason shows no LSP servers
 

@@ -7,21 +7,21 @@
 `init.lua` keeps startup ordering explicit:
 
 1. `vim.loader.enable()` enables Neovim's Lua module cache.
-2. `/usr/bin/mise env --json` is imported when that executable exists.
+2. The default mise shims directory is prepended to `PATH`.
 3. `<Space>` becomes leader and `,` becomes local leader.
 4. `lua/config/options.lua` sets editor options and disables unused providers.
 5. `lua/config/lazy.lua` bootstraps Lazy and imports plugin specifications.
 6. `lua/config/keymaps.lua` installs global mappings.
 7. `lua/config/autocmds.lua` installs global automatic behavior.
 
-This order matters. Plugin setup can use options, leaders, and the mise-provided
-`PATH`, while global keymaps and autocmds are installed after Lazy has registered
-its command and key triggers.
+This order matters. Plugin setup can use options, leaders, and the shim-enabled
+`PATH`, while global keymaps and autocmds are installed after Lazy has
+registered its command and key triggers.
 
 ```mermaid
 flowchart TD
     Init[init.lua] --> Loader[vim.loader]
-    Loader --> Mise[/usr/bin/mise env]
+    Loader --> Mise[mise shims in PATH]
     Mise --> Options[lua/config/options.lua]
     Options --> Lazy[lua/config/lazy.lua]
     Lazy --> Specs[lua/plugins and lua/plugins/lang]
