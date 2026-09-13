@@ -191,7 +191,7 @@ HTML comments inside the template block.
 | Rust | `rustfmt` |
 | C, C++ | `clang-format` |
 | sh, Bash | `shfmt` |
-| JavaScript, TypeScript, Vue, HTML, CSS, JSON, YAML, Markdown | `prettier` |
+| JavaScript, JSX, TypeScript, TSX, Vue, HTML, CSS, JSON, YAML, Markdown | `oxfmt` (npm package) |
 | TeX | `latexindent -l -m` |
 | BibTeX | `bibtex-tidy` with repository-defined sorting and cleanup flags |
 | XML | `xmlformatter` |
