@@ -63,7 +63,13 @@ return {
 				return { timeout_ms = settings.format_timeout_ms, lsp_format = "fallback" }
 			end,
 			formatters = {
-				latexindent = { prepend_args = { "-l", "-m" } },
+				latexindent = {
+					prepend_args = { "-l", "-m" },
+					-- stdin input reads localSettings.yaml from cwd; use the file's directory.
+					cwd = function(_, ctx)
+						return ctx.dirname
+					end,
+				},
 				["bibtex-tidy"] = {
 					command = "bibtex-tidy",
 					args = {
