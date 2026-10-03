@@ -14,6 +14,9 @@ return {
 				vim.env.GDK_BACKEND = "x11"
 			end
 
+			-- Gentoo: zathura needs USE="-seccomp -landlock" (package.use). Otherwise
+			-- /usr/bin/zathura is zathura-sandbox, built without synctex, which exits
+			-- on vimtex's --synctex-forward and the viewer never opens.
 			vim.g.vimtex_view_method = "zathura"
 			vim.g.vimtex_view_forward_search_on_start = 1
 			vim.g.vimtex_view_automatic = 1
