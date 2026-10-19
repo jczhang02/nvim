@@ -9,6 +9,15 @@ return {
 		opts = {
 			heading = { sign = false },
 			code = { width = "block", min_width = 60 },
+			custom_handlers = {
+				-- Environments and references of Lemma blog posts; other buffers are left alone.
+				markdown = {
+					extends = true,
+					parse = function(ctx)
+						return require("lemma.render").parse(ctx)
+					end,
+				},
+			},
 		},
 	},
 }

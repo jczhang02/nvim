@@ -120,7 +120,7 @@ return {
 				per_filetype = {
 					tex = { "lsp", "latex", "snippets", "path", "buffer", "spell" },
 					bib = { "lsp", "latex", "snippets", "path", "buffer" },
-					markdown = { "lsp", "snippets", "path", "buffer", "spell" },
+					markdown = { "lsp", "lemma", "snippets", "path", "buffer", "spell" },
 				},
 				providers = {
 					lsp = { name = "[LSP]", score_offset = 90 },
@@ -138,6 +138,7 @@ return {
 					spell = { name = "[SPELL]", module = "blink-cmp-spell", score_offset = 30 },
 					tmux = { name = "[TMUX]", module = "blink-cmp-tmux", score_offset = 40 },
 					latex = { name = "[LTEX]", module = "blink-cmp-latex", score_offset = 60 },
+					lemma = { name = "[REF]", module = "lemma.blink", score_offset = 95 },
 				},
 			},
 			cmdline = {

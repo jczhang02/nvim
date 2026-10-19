@@ -368,6 +368,7 @@ Source: `lua/plugins/sidekick.lua`.
 | N | `<leader>sd` | Legacy session delete picker |
 | N | `<leader>pi` | Paste clipboard image |
 | N | `<F1>` | Toggle Markdown rendering |
+| N | `gd` | In a Lemma blog post, go to the label or BibTeX entry under the cursor |
 | N | `<leader>st` | TODO picker |
 | N | `[t` / `]t` | Previous / next TODO |
 

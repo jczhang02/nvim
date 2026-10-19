@@ -105,7 +105,8 @@ LuaSnip loads:
 - `friendly-snippets`;
 - repository snippets from `snips/snippets/c.json`, `cpp.json`, `go.json`, and
   `latex.json`;
-- Lua snippets from `lua/snippets/tex.lua`;
+- Lua snippets from `lua/snippets/tex.lua`, and from `lua/snippets/markdown.lua`
+  for Lemma blog posts;
 - `luasnip-latex-snippets.nvim` for TeX, BibTeX, and Markdown.
 
 The repository manifest lists only files that exist. Do not use its old upstream
@@ -321,7 +322,26 @@ keep.
 
 `<F1>` toggles render-markdown for the current Markdown buffer. CJK-friendly
 wrapping is enabled and hard text width is disabled for Markdown, text, and TeX
-buffers. Pangu spacing is available for those filetypes.
+buffers. Pangu spacing is available for those filetypes; it keeps ASCII
+punctuation (`g:pangu_rule_fullwidth_punctuation` is off).
+
+### Lemma blog posts
+
+A Markdown file below `src/content/posts/` of a repository with
+`lemma.config.mjs` gets support for the theme's syntax. The numbers match the
+built page, because `lua/lemma` scans the post as `plugins/remark-theorems.mjs`
+does.
+
+| Feature | Behavior |
+|---|---|
+| rendering | `:::theorem[Title]{#thm:x}` shows as "定理 2.1 (Title)", the closing `:::` as a rule, and `\ref{thm:x}` as its number; the cursor line shows the source |
+| warnings | labels in `\ref`/`\eqref`, citation keys in `\cite`, and environment names the build would not find are underlined |
+| completion | `\ref{` and `\eqref{` list the labels of the post; `\cite{` lists the BibTeX keys of `src/bibliography.bib` |
+| jumps | `gd`, `CTRL-]` and `:tag` go from a label or key to its definition or BibTeX entry; `CTRL-T` returns |
+| folds | headings and `:::` environments fold (`foldmethod=expr`) |
+| snippets | `thm`, `lem`, `prop`, `cor`, `def`, `ex`, `rem`, `proof`, `fig`, `tab`, `eq`, `tikzcd`, `tikz` at the start of a line |
+
+Other Markdown buffers are unchanged.
 
 `<leader>pi` invokes img-clip. Clipboard images are saved below `figures/` at
 the current working directory and inserted relative to the edited file.

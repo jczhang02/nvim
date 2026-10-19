@@ -28,28 +28,28 @@ may still be available through a project plugin or an ad hoc command.
 | Bash, sh | `bash` | `bashls` | `shfmt` | `shellcheck` | AsyncRun |
 | C | `c` | `clangd` | `clang-format` | | codelldb |
 | C++ | `cpp` | `clangd` | `clang-format` | | codelldb |
-| CSS | `css` | | Prettier | | color preview |
+| CSS | `css` | | oxfmt | | color preview |
 | CSV | | | | | csv.vim |
 | Gentoo files | | | | | gentoo-syntax |
 | Go | `go` | `gopls` | `goimports`, then `gofumpt` | | Delve |
 | go.mod | `gomod` | `gopls` | | | |
-| HTML | `html` | `html` | Prettier | | automatic tag updates |
-| JavaScript | `javascript` | `ts_ls` | Prettier | | |
-| JSON | `json` | `jsonls` | Prettier | | |
+| HTML | `html` | `html` | oxfmt | | automatic tag updates |
+| JavaScript | `javascript` | `ts_ls` | oxfmt | | |
+| JSON | `json` | `jsonls` | oxfmt | | |
 | LaTeX | `latex` installed, generic start skipped | | `latexindent` | | VimTeX, Zathura, LuaSnip |
 | BibTeX | VimTeX | | `bibtex-tidy` | | LaTeX completion and snippets |
 | Lua | `lua` | `lua_ls` | Stylua | | |
 | Make | `make` | | | | |
-| Markdown | `markdown`, `markdown_inline` | | Prettier | | render-markdown, snippets |
+| Markdown | `markdown`, `markdown_inline` | | oxfmt | | render-markdown, snippets, Lemma blog posts |
 | Python | `python` | `pyright` through Delance, plus Ruff | `ruff_fix`, then `ruff_format` | | debugpy |
 | Regex | `regex` | | | | picker highlighting |
 | Rust | `rust` | rustaceanvim and rust-analyzer | `rustfmt` | | codelldb, crates.nvim |
-| TypeScript | `typescript` | `ts_ls` | Prettier | | |
+| TypeScript | `typescript` | `ts_ls` | oxfmt | | |
 | Vim script | | | | `vint` | |
 | Vim help | `vimdoc` | | | | |
-| Vue | `vue` | | Prettier | | automatic tag updates |
+| Vue | `vue` | | oxfmt | | automatic tag updates |
 | XML | | | `xmlformatter` | | |
-| YAML | `yaml` | | Prettier | | |
+| YAML | `yaml` | | oxfmt | | |
 
 The parser list is controlled by `settings.treesitter_parsers`. The matrix does
 not claim that an installed parser starts in every filetype. TeX is the main
@@ -130,7 +130,10 @@ Per-filetype changes:
 |---|---|
 | TeX | LSP, LaTeX, snippets, path, buffer, spell |
 | BibTeX | LSP, LaTeX, snippets, path, buffer |
-| Markdown | LSP, snippets, path, buffer, spell |
+| Markdown | LSP, Lemma references, snippets, path, buffer, spell |
+
+The Lemma references source (`[REF]`, offset 95) completes labels and BibTeX
+keys, and is enabled only in Lemma blog posts.
 
 The tmux provider is installed and registered with offset 40, but no active
 source list includes it. Add `"tmux"` to a default or per-filetype list before

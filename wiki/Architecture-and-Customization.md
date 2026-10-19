@@ -33,6 +33,9 @@ flowchart TD
 
 ```text
 init.lua
+after/
+└── ftplugin/
+    └── markdown.lua
 lua/
 ├── config/
 │   ├── autocmds.lua
@@ -44,7 +47,12 @@ lua/
 ├── plugins/
 │   ├── lang/
 │   └── *.lua
+├── lemma/
+│   ├── init.lua
+│   ├── blink.lua
+│   └── render.lua
 └── snippets/
+    ├── markdown.lua
     └── tex.lua
 snips/
 ├── package.json
@@ -62,6 +70,8 @@ The boundaries are simple:
 
 - `config/` owns behavior shared across plugins.
 - `plugins/` owns plugin declarations and plugin-specific integration.
+- `lemma/` owns support for posts of the Lemma blog theme; `after/ftplugin/`
+  attaches it to those buffers.
 - `settings.lua` is the supported personal customization surface.
 - `snips/` and `lua/snippets/` own repository-specific snippets.
 - `wiki/` owns long-form documentation.
