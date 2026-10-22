@@ -19,6 +19,7 @@ return {
 			which_key = true,
 			flash = true,
 			neogit = false,
+			octo = true,
 			dap = true,
 			diffview = true,
 			lsp_trouble = true,

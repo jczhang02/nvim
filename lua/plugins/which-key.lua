@@ -16,6 +16,7 @@ return {
 				{ "<leader>d", group = "dap/debug" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>gh", group = "git hunk" },
+				{ "<leader>G", group = "github (octo)" },
 				{ "<leader>b", group = "buffer" },
 				{ "<leader>w", group = "window" },
 				{ "<leader>W", group = "window swap" },
