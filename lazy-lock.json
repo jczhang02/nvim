@@ -2,6 +2,7 @@
   "LuaSnip": { "branch": "master", "commit": "642b0c595e11608b4c18219e93b88d7637af27bc" },
   "asyncrun.vim": { "branch": "master", "commit": "98d3c0fdeb983f0ef62fe3a49da440f6d2c045ce" },
   "autoclose.nvim": { "branch": "main", "commit": "bcad8e84d9cd78ba73433cb396b68e489af11e31" },
+  "backend-tmux": { "branch": "master", "commit": "9e9e6aa9b3eb7a8d3896a993611622ac97abff52" },
   "blink-cmp-latex": { "branch": "main", "commit": "4f2910b98dabed17a1667ab806354faa8763098e" },
   "blink-cmp-spell": { "branch": "master", "commit": "2bd0e0d5e7735c047e72b6918a0458f3e8fadaba" },
   "blink-cmp-tmux": { "branch": "main", "commit": "112ddbf2e09d9cb4736de70dd01eb9654cf01d70" },

@@ -2,6 +2,14 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		lazy = false,
+		-- v3 ships no multiplexer backends; tmux lives in backend-tmux, which also
+		-- keeps the pane option @pane-is-vim that the tmux bindings branch on.
+		dependencies = {
+			{ "smart-splits-nvim/backend-tmux", main = "smart-splits-backend-tmux" },
+		},
+		opts = {
+			mux = { backend = "smart-splits-backend-tmux" },
+		},
 		keys = {
 			{
 				"<C-h>",
