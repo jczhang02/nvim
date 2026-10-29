@@ -7,7 +7,8 @@ return {
 			{ "<leader>gD", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
 			{ "<leader>gf", "<cmd>DiffviewFileHistory<CR>", desc = "File history" },
 			-- Branch review: what this branch changed since it left main (three dots), and per commit.
-			{ "<leader>gm", "<cmd>DiffviewOpen main...HEAD<CR>", desc = "Diffview branch vs main" },
+			-- --imply-local: the HEAD side is the file on disk, so it can be edited.
+			{ "<leader>gm", "<cmd>DiffviewOpen main...HEAD --imply-local<CR>", desc = "Diffview branch vs main" },
 			{ "<leader>gM", "<cmd>DiffviewFileHistory --range=main..HEAD<CR>", desc = "Branch commits since main" },
 		},
 		opts = {
