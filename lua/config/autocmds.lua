@@ -68,7 +68,10 @@ au({ "FocusGained", "BufEnter", "CursorHold" }, {
 	group = aug("CheckExternalChanges", { clear = true }),
 	callback = function()
 		vim.schedule(function()
-			vim.cmd.checktime()
+			-- E11: checktime is not allowed in the command-line window (q:).
+			if vim.fn.getcmdwintype() == "" then
+				vim.cmd.checktime()
+			end
 		end)
 	end,
 })
