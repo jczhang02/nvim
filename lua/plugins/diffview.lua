@@ -6,6 +6,9 @@ return {
 			{ "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview open" },
 			{ "<leader>gD", "<cmd>DiffviewClose<CR>", desc = "Diffview close" },
 			{ "<leader>gh", "<cmd>DiffviewFileHistory<CR>", desc = "File history" },
+			-- Branch review: what this branch changed since it left main (three dots), and per commit.
+			{ "<leader>gm", "<cmd>DiffviewOpen main...HEAD<CR>", desc = "Diffview branch vs main" },
+			{ "<leader>gM", "<cmd>DiffviewFileHistory --range=main..HEAD<CR>", desc = "Branch commits since main" },
 		},
 		opts = {
 			hooks = {

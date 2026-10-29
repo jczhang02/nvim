@@ -52,7 +52,9 @@ opt.confirm = true
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.termguicolors = true
-opt.background = settings.background
+-- 'background' is left to Nvim's terminal detection (see settings.colorscheme).
+opt.diffopt:remove("inline:char")
+opt.diffopt:append("inline:word") -- whole changed words in prose diffs
 opt.winborder = settings.border_style
 opt.completeopt = { "fuzzy", "menu", "menuone", "noselect", "popup" }
 opt.shortmess:append("WIcC")

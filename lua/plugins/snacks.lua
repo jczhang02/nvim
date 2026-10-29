@@ -231,11 +231,14 @@ return {
 			desc = "Terminal toggle (float)",
 		},
 		{
-			"<leader>gg",
+			"<leader>gH",
 			function()
-				Snacks.terminal.toggle("lazygit", { win = { position = "float" } })
+				-- Nvim's terminal does not answer palette queries, so hunk's "terminal" theme
+				-- would fall back to xterm colors here: pass the Catppuccin flavour instead.
+				local flavour = vim.o.background == "dark" and "mocha" or "latte"
+				Snacks.terminal.toggle("hunk diff --theme catppuccin-" .. flavour, { win = { position = "float" } })
 			end,
-			desc = "Lazygit",
+			desc = "Hunk diff (float)",
 		},
 		{
 			"<leader>bd",

@@ -40,6 +40,12 @@ return {
 				map("n", "<leader>ghD", function()
 					gs.diffthis("~")
 				end, "Diff against HEAD~")
+				-- Signs and ]h against main show everything the branch changed, not only unstaged edits.
+				map("n", "<leader>ghm", function()
+					vim.g.gitsigns_base_main = not vim.g.gitsigns_base_main
+					gs.change_base(vim.g.gitsigns_base_main and "main" or nil, true)
+					vim.notify("Gitsigns base: " .. (vim.g.gitsigns_base_main and "main" or "index"))
+				end, "Toggle base: index / main")
 			end,
 		},
 	},

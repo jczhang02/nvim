@@ -6,9 +6,10 @@ M.formatter_block_list = {}
 M.format_disabled_dirs = {}
 M.server_formatting_block_list = { clangd = true, lua_ls = true, ts_ls = true }
 
-M.colorscheme = "catppuccin-latte"
-M.background = "light"
-M.transparent_background = false
+-- Plain "catppuccin" picks Latte or Mocha from 'background', which Nvim detects from
+-- the terminal at startup and tmux's theme hooks update later (tmux/nvim-theme.sh).
+M.colorscheme = "catppuccin"
+M.transparent_background = true
 M.border_style = "single"
 
 M.lsp_inlayhints = false

@@ -63,7 +63,8 @@ au({ "BufReadPost" }, {
 	end,
 })
 
-au({ "FocusGained", "BufEnter" }, {
+-- CursorHold: an agent in another tmux pane edits files while Nvim keeps focus.
+au({ "FocusGained", "BufEnter", "CursorHold" }, {
 	group = aug("CheckExternalChanges", { clear = true }),
 	callback = function()
 		vim.schedule(function()
