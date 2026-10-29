@@ -88,7 +88,7 @@ au("BufWritePre", {
 
 au("FileType", {
 	group = aug("CloseWithQ", { clear = true }),
-	pattern = { "qf", "help", "man", "lspinfo", "checkhealth", "notify", "trouble", "DiffviewFiles" },
+	pattern = { "qf", "help", "man", "lspinfo", "checkhealth", "notify", "trouble" },
 	callback = function(args)
 		vim.bo[args.buf].buflisted = false
 		vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = args.buf, silent = true })
