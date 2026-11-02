@@ -31,7 +31,7 @@ return {
 				{ "<leader>P", group = "package (lazy)" },
 				{ "<leader>a", group = "asyncrun" },
 				{ "<leader>h", group = "profile (snacks)" },
-				{ "<leader>i", group = "ai (sidekick, claude)" },
+				{ "<leader>i", group = "ai (sidekick)" },
 				{ "<leader>j", group = "jump (flash)" },
 				{ "<leader>z", group = "treesitter swap" },
 			},
