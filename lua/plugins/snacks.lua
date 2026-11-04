@@ -2,6 +2,51 @@ return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
+	config = function(_, opts)
+		require("snacks").setup(opts)
+		-- snacks.image asks the terminal for its name with an escape query, but skips that under
+		-- tmux only when extended-keys is "on". Ours is "always", so the reply leaks into the
+		-- buffer as text and ghostty is not detected. Tell snacks the terminal name from tmux.
+		-- Remove when https://github.com/folke/snacks.nvim/issues/2332 also covers "always".
+		if vim.env.TMUX then
+			local term = require("snacks.image.terminal")
+			local name = vim.trim(vim.fn.system({ "tmux", "display-message", "-p", "#{client_termname}" }))
+			term._terminal = { terminal = name:gsub("^xterm%-", ""), version = "unknown" }
+			term.transform = function(data)
+				return ("\027Ptmux;" .. data:gsub("\027", "\027\027")) .. "\027\\"
+			end
+		end
+		-- snacks.image wraps every formula in \[...\], so $...$ gets display style: big sums and
+		-- fractions that take 2-3 rows. Typeset inline formulas in text style so they fit one row.
+		-- snacks also crops each image to its ink and stretches an inline image to the row height,
+		-- so a lone $\sigma$ came out as tall as a full line. A \strut gives every inline formula
+		-- the same line-high box, and the "imath" type skips the crop (see convert.magick.imath).
+		local doc = require("snacks.image.doc")
+		local latex = doc.transforms.latex
+		doc.transforms.latex = function(img, ctx)
+			local c = img.ext == "math.tex" and img.content and vim.trim(img.content) or ""
+			local body = c:match("^%$([^%$].-)%$$") or c:match("^\\%((.-)\\%)$")
+			if body then
+				img.content = "\\begin{math}\\strut " .. body .. "\\end{math}"
+			end
+			latex(img, ctx)
+			if body then
+				img.ext = "imath.tex"
+			end
+		end
+		-- Render images and formulas inside markdown only; .tex files keep their source (vimtex).
+		local attach = doc.attach
+		doc.attach = function(buf)
+			if vim.bo[buf].filetype == "markdown" then
+				return attach(buf)
+			end
+		end
+		-- Draw formulas in the text color instead of the pale @markup.math.latex color.
+		-- Loading snacks.image first registers its default, so this entry replaces it and
+		-- snacks reapplies it after every colorscheme change.
+		require("snacks.image")
+		Snacks.util.set_hl({ SnacksImageMath = "Normal" })
+	end,
 	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true, notify = true, size = 1.5 * 1024 * 1024 },
@@ -53,6 +98,13 @@ return {
 			},
 		},
 		explorer = { enabled = false },
+		image = {
+			enabled = true,
+			-- default "Large" (1.44x normalsize) draws formulas too big next to the 12pt terminal text
+			math = { latex = { font_size = "small" } },
+			-- inline formulas: keep the full \strut box, no -trim
+			convert = { magick = { imath = { "-density", 192, "{src}[{page}]" } } },
+		},
 		indent = { enabled = true, scope = { enabled = true } },
 		input = { enabled = true },
 		notifier = { enabled = true, timeout = 3000, style = "compact" },

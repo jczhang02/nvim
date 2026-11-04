@@ -9,6 +9,7 @@ return {
 		opts = {
 			heading = { sign = false },
 			code = { width = "block", min_width = 60 },
+			latex = { enabled = false },
 			custom_handlers = {
 				-- Environments and references of Lemma blog posts; other buffers are left alone.
 				markdown = {
