@@ -11,7 +11,6 @@ opt.relativenumber = true
 opt.signcolumn = "yes"
 opt.cursorline = true
 opt.scrolloff = 8
-opt.sidescroll = 1
 opt.sidescrolloff = 8
 opt.smoothscroll = true
 opt.mousescroll = "ver:3,hor:6"
@@ -33,8 +32,6 @@ opt.smartindent = true
 
 opt.ignorecase = true
 opt.smartcase = true
-opt.hlsearch = true
-opt.incsearch = true
 
 opt.splitright = true
 opt.splitbelow = true
@@ -42,11 +39,7 @@ opt.splitbelow = true
 opt.updatetime = 200
 opt.timeoutlen = 300
 
-opt.autoread = true
-opt.swapfile = true
-opt.backup = false
 opt.undofile = true
-opt.undodir = vim.fn.stdpath("state") .. "/undo"
 opt.confirm = true
 
 opt.mouse = "a"
@@ -60,15 +53,10 @@ opt.completeopt = { "fuzzy", "menu", "menuone", "noselect", "popup" }
 opt.shortmess:append("WIcC")
 opt.laststatus = 3
 opt.showtabline = 2
-opt.cmdheight = 1
 opt.pumheight = 15
 opt.pumblend = 10
-opt.winblend = 0
-opt.conceallevel = 0
 opt.foldlevel = 99
 opt.foldlevelstart = 99
-opt.foldcolumn = "0"
-opt.foldenable = true
 
 opt.spelllang = { "en_us", "cjk" }
 opt.spelloptions = "camel"

@@ -22,8 +22,6 @@ return {
 			{ "<leader>bP", "<cmd>BufferLineGroupClose ungrouped<CR>", desc = "Close non-pinned" },
 			{ "[b", "<cmd>BufferLineCyclePrev<CR>", desc = "Prev buffer" },
 			{ "]b", "<cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
-			{ "<A-i>", "<cmd>BufferLineCycleNext<CR>", desc = "Buffer next" },
-			{ "<A-o>", "<cmd>BufferLineCyclePrev<CR>", desc = "Buffer prev" },
 			{ "<A-S-i>", "<cmd>BufferLineMoveNext<CR>", desc = "Move buffer to next" },
 			{ "<A-S-o>", "<cmd>BufferLineMovePrev<CR>", desc = "Move buffer to prev" },
 			{ "<leader>bs", "<cmd>BufferLineSortByDirectory<CR>", desc = "Sort by directory" },

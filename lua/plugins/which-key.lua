@@ -22,7 +22,7 @@ return {
 				{ "<leader>W", group = "window swap" },
 				{ "<leader>t", group = "terminal/tab" },
 				{ "<leader>x", group = "trouble/quickfix" },
-				{ "<leader>s", group = "session/search/todo" },
+				{ "<leader>s", group = "search/todo" },
 				{ "<leader>S", group = "search & replace (grug-far)" },
 				{ "<leader>c", group = "code" },
 				{ "<leader>r", group = "refactor/rename" },

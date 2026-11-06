@@ -38,27 +38,7 @@ return {
 			},
 			-- Legacy hop equivalents
 			{
-				"<leader>jw",
-				mode = { "n", "v" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Jump to word",
-			},
-			{
 				"<leader>jj",
-				mode = { "n", "v" },
-				function()
-					require("flash").jump({
-						search = { mode = "search", max_length = 0 },
-						label = { after = { 0, 0 } },
-						pattern = "^",
-					})
-				end,
-				desc = "Jump to line",
-			},
-			{
-				"<leader>jk",
 				mode = { "n", "v" },
 				function()
 					require("flash").jump({
@@ -82,14 +62,6 @@ return {
 					})
 				end,
 				desc = "Jump 1 char",
-			},
-			{
-				"<leader>jC",
-				mode = { "n", "v" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Jump 2 chars",
 			},
 		},
 	},

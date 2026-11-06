@@ -22,7 +22,6 @@ return {
 				end,
 			},
 			"ribru17/blink-cmp-spell",
-			"mgalliou/blink-cmp-tmux",
 			"erooke/blink-cmp-latex",
 			{
 				"xzbdmw/colorful-menu.nvim",
@@ -63,7 +62,6 @@ return {
 				["<CR>"] = { "accept", "fallback" },
 			},
 			appearance = {
-				use_nvim_cmp_as_default = false,
 				nerd_font_variant = "mono",
 				kind_icons = (function()
 					local icons = require("config.icons")
@@ -136,7 +134,6 @@ return {
 						},
 					},
 					spell = { name = "[SPELL]", module = "blink-cmp-spell", score_offset = 30 },
-					tmux = { name = "[TMUX]", module = "blink-cmp-tmux", score_offset = 40 },
 					latex = { name = "[LTEX]", module = "blink-cmp-latex", score_offset = 60 },
 					lemma = { name = "[REF]", module = "lemma.blink", score_offset = 95 },
 				},

@@ -75,7 +75,6 @@ return {
 				},
 			})
 
-			vim.lsp.config("ts_ls", { single_file_support = true })
 			vim.lsp.config("pyright", {
 				cmd = { "delance-langserver", "--stdio" },
 				settings = {
@@ -108,9 +107,6 @@ return {
 					},
 				}),
 			})
-			vim.lsp.config("bashls", {})
-			vim.lsp.config("html", {})
-			vim.lsp.config("jsonls", {})
 
 			vim.lsp.enable(require("config.settings").lsp_servers)
 
@@ -145,24 +141,14 @@ return {
 					map("gh", function()
 						Snacks.picker.lsp_references()
 					end, "Pick references")
-					map("gr", vim.lsp.buf.rename, "Rename")
-					map("gR", vim.lsp.buf.rename, "Rename (project)")
 					map("ga", vim.lsp.buf.code_action, "Code action", { "n", "v" })
 					map("gs", vim.lsp.buf.signature_help, "Signature help")
 					map("go", "<cmd>Trouble symbols toggle win.position=right<CR>", "Toggle outline")
 					map("gto", function()
 						Snacks.picker.lsp_symbols()
 					end, "Toggle outline (picker)")
-					map("g[", function()
-						vim.diagnostic.jump({ count = -1 })
-					end, "Prev diagnostic")
-					map("g]", function()
-						vim.diagnostic.jump({ count = 1 })
-					end, "Next diagnostic")
 					map("gci", vim.lsp.buf.incoming_calls, "Incoming calls")
 					map("gco", vim.lsp.buf.outgoing_calls, "Outgoing calls")
-					map("gt", "<cmd>Trouble diagnostics toggle<CR>", "Toggle trouble list")
-					map("K", vim.lsp.buf.hover, "Hover")
 					map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
 					map("<leader>rn", vim.lsp.buf.rename, "Rename")
 					map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "v" })
@@ -171,7 +157,6 @@ return {
 					map("<leader>lx", function()
 						vim.diagnostic.open_float()
 					end, "Line diagnostics")
-					map("<leader>lw", "<cmd>Trouble diagnostics toggle<CR>", "Workspace diagnostics")
 					map("<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", "Document diagnostics")
 					map("<leader>lh", function()
 						local b = vim.api.nvim_get_current_buf()
