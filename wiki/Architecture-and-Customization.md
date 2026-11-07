@@ -124,7 +124,7 @@ settings changes.
 | `transparent_background` | boolean | `false` | Catppuccin transparency |
 | `border_style` | shared plugin border token | `single` | Configured floating windows; keep `single` for cross-plugin compatibility |
 | `lsp_inlayhints` | boolean | `false` | Enables supported LSP inlay hints on attach |
-| `lsp_servers` | list of server names | Bash, C/C++, Go, HTML, JSON, Lua, Python, Ruff, TeX, TypeScript | Native LSP clients enabled at startup |
+| `lsp_servers` | list of server names | Bash, C/C++, Go, HTML, JSON, ltex grammar, Lua, Python, Ruff, TeX, TypeScript | Native LSP clients enabled at startup |
 | `mason_dap_adapters` | list of adapter names | `codelldb` | Adapters ensured by mason-nvim-dap |
 | `treesitter_parsers` | list of parser names | language list in the file | Parsers installed on interactive startup |
 
