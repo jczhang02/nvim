@@ -108,6 +108,15 @@ return {
 				}),
 			})
 
+			-- vimtex compiles; texlab only needs to find the latexmk output (aux_dir/out_dir = build).
+			vim.lsp.config("texlab", {
+				settings = {
+					texlab = {
+						build = { auxDirectory = "build", logDirectory = "build", pdfDirectory = "build" },
+					},
+				},
+			})
+
 			vim.lsp.enable(require("config.settings").lsp_servers)
 
 			vim.diagnostic.config({
@@ -124,9 +133,19 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(ev)
 					local buf = ev.buf
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					local map = function(lhs, rhs, desc, mode)
 						vim.keymap.set(mode or "n", lhs, rhs, { buffer = buf, silent = true, desc = desc })
 					end
+					-- ltex only checks prose. It needs code actions (dictionary, rules) and nothing else,
+					-- and must not replace buffer maps such as the Lemma `gd` in markdown posts.
+					if client and client.name == "ltex_plus" then
+						map("ga", vim.lsp.buf.code_action, "Code action", { "n", "v" })
+						map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "v" })
+						return
+					end
+					-- vimtex owns <leader>li, <leader>lr and <leader>lv in TeX buffers.
+					local vimtex_buf = vim.tbl_contains({ "tex", "plaintex", "bib" }, vim.bo[buf].filetype)
 					map("gd", vim.lsp.buf.definition, "Go to definition")
 					map("gD", function()
 						Snacks.picker.lsp_definitions()
@@ -152,8 +171,16 @@ return {
 					map("<C-k>", vim.lsp.buf.signature_help, "Signature help", "i")
 					map("<leader>rn", vim.lsp.buf.rename, "Rename")
 					map("<leader>ca", vim.lsp.buf.code_action, "Code action", { "n", "v" })
-					map("<leader>li", "<cmd>LspInfo<CR>", "LSP info")
-					map("<leader>lr", "<cmd>LspRestart<CR>", "LSP restart")
+					if not vimtex_buf then
+						map("<leader>li", "<cmd>LspInfo<CR>", "LSP info")
+						map("<leader>lr", "<cmd>LspRestart<CR>", "LSP restart")
+						map("<leader>lv", function()
+							local ok, tid = pcall(require, "tiny-inline-diagnostic")
+							if ok then
+								tid.toggle()
+							end
+						end, "Toggle inline diagnostics")
+					end
 					map("<leader>lx", function()
 						vim.diagnostic.open_float()
 					end, "Line diagnostics")
@@ -163,12 +190,6 @@ return {
 						local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = b })
 						vim.lsp.inlay_hint.enable(not enabled, { bufnr = b })
 					end, "Toggle inlay hints")
-					map("<leader>lv", function()
-						local ok, tid = pcall(require, "tiny-inline-diagnostic")
-						if ok then
-							tid.toggle()
-						end
-					end, "Toggle inline diagnostics")
 					map("<leader>lpd", function()
 						Snacks.picker.lsp_definitions()
 					end, "Pick definitions")
@@ -182,7 +203,6 @@ return {
 						Snacks.picker.lsp_type_definitions()
 					end, "Pick type definitions")
 
-					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					if client then
 						if require("config.settings").server_formatting_block_list[client.name] then
 							client.server_capabilities.documentFormattingProvider = false

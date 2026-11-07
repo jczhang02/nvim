@@ -36,8 +36,8 @@ may still be available through a project plugin or an ad hoc command.
 | HTML | `html` | `html` | oxfmt | | automatic tag updates |
 | JavaScript | `javascript` | `ts_ls` | oxfmt | | |
 | JSON | `json` | `jsonls` | oxfmt | | |
-| LaTeX | `latex` installed, generic start skipped | | `latexindent` | | VimTeX, Zathura, LuaSnip |
-| BibTeX | VimTeX | | `bibtex-tidy` | | LaTeX completion and snippets |
+| LaTeX | `latex` installed, generic start skipped | `texlab` | `latexindent` | | VimTeX, Zathura, LuaSnip |
+| BibTeX | VimTeX | `texlab` | `bibtex-tidy` | | LaTeX completion and snippets |
 | Lua | `lua` | `lua_ls` | Stylua | | |
 | Make | `make` | | | | |
 | Markdown | `markdown`, `markdown_inline` | | oxfmt | | render-markdown, snippets, Lemma blog posts |
@@ -69,10 +69,11 @@ then enables the names in `settings.lsp_servers`.
 | `gopls` | gofumpt, placeholders, staticcheck, unused-parameter analysis, type/value hints |
 | `html` | Native defaults |
 | `jsonls` | Native defaults |
-| `lua_ls` | Neovim runtime library, no telemetry, `vim`/`Snacks` globals, hints available; formatting disabled |
+| `lua_ls` | Library from lazydev.nvim (runtime plus required plugins), no telemetry, `vim`/`Snacks` globals, hints available; formatting disabled |
 | `pyright` | Runs `delance-langserver --stdio`, workspace diagnostics, standard checking, library source, inlay capabilities |
 | `ruff` | Error-level logging; owns Python fixes and formatting |
-| `ts_ls` | Single-file support; formatting disabled |
+| `texlab` | Reads latexmk output from `build/`; VimTeX compiles and views |
+| `ts_ls` | Formatting disabled |
 | rustaceanvim | Starts rust-analyzer for Rust outside the global server list |
 
 The `pyright` configuration name is retained because Neovim and project settings
@@ -89,7 +90,8 @@ Conform owns their filetypes.
 Every attached client receives Blink capabilities. `LspAttach` then installs
 buffer-local navigation, action, diagnostics, signature, and inlay-hint
 mappings. If `settings.lsp_inlayhints` is true and the client supports hints,
-they are enabled for the buffer.
+they are enabled for the buffer. In TeX and BibTeX buffers it skips
+`<leader>li`, `<leader>lr`, and `<leader>lv`, which VimTeX owns there.
 
 Diagnostics use:
 
