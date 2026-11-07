@@ -39,7 +39,7 @@ return {
 			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
-						workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+						workspace = { checkThirdParty = false }, -- lazydev.nvim fills in the library
 						telemetry = { enable = false },
 						diagnostics = { globals = { "vim", "Snacks" } },
 						completion = { callSnippet = "Replace" },

@@ -116,6 +116,7 @@ return {
 			sources = {
 				default = { "lsp", "snippets", "path", "buffer", "spell" },
 				per_filetype = {
+					lua = { inherit_defaults = true, "lazydev" },
 					tex = { "lsp", "latex", "snippets", "path", "buffer", "spell" },
 					bib = { "lsp", "latex", "snippets", "path", "buffer" },
 					markdown = { "lsp", "lemma", "snippets", "path", "buffer", "spell" },
@@ -136,6 +137,7 @@ return {
 					spell = { name = "[SPELL]", module = "blink-cmp-spell", score_offset = 30 },
 					latex = { name = "[LTEX]", module = "blink-cmp-latex", score_offset = 60 },
 					lemma = { name = "[REF]", module = "lemma.blink", score_offset = 95 },
+					lazydev = { name = "[LAZY]", module = "lazydev.integrations.blink", score_offset = 100 },
 				},
 			},
 			cmdline = {
