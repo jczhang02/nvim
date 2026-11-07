@@ -81,10 +81,6 @@ return {
 					map({ "n", "x", "o" }, "[M", function()
 						move.goto_previous_end("@class.outer", "textobjects")
 					end, "Prev class end")
-					local rep = require("nvim-treesitter-textobjects.repeatable_move")
-					map({ "n", "x", "o" }, ";", function()
-						rep.repeat_last_move_next()
-					end, "Repeat last move")
 				end,
 			},
 			{

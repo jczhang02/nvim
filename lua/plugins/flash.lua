@@ -14,7 +14,8 @@ return {
 			},
 			{
 				"S",
-				mode = { "n", "x", "o" },
+				-- Not in visual mode: nvim-surround owns visual S.
+				mode = { "n", "o" },
 				function()
 					require("flash").treesitter()
 				end,

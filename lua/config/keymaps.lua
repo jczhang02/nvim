@@ -59,13 +59,7 @@ map("c", "<C-t>", [[<C-R>=expand("%:p:h") . "/" <CR>]], "Path of current file")
 -- "Suckless" niceties
 map("n", "J", "mzJ`z", "Join next line (cursor stays)")
 map("n", "<S-Tab>", "<cmd>normal! za<CR>", "Toggle code fold")
-map("n", "<leader>o", "<cmd>setlocal spell! spelllang=en_us<CR>", "Toggle spell check")
-
--- Tabs (legacy)
-map("n", "tn", "<cmd>tabnew<CR>", "Tab new")
-map("n", "tk", "<cmd>tabnext<CR>", "Tab next")
-map("n", "tj", "<cmd>tabprevious<CR>", "Tab prev")
-map("n", "to", "<cmd>tabonly<CR>", "Tab only")
+map("n", "<leader>o", "<cmd>setlocal spell!<CR>", "Toggle spell check")
 
 -- Terminal-mode window focus
 map("t", "<C-w>h", [[<Cmd>wincmd h<CR>]], "Window left")

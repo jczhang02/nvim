@@ -36,9 +36,9 @@ return {
 				preset = "none",
 				["<C-p>"] = { "select_prev", "fallback" },
 				["<C-n>"] = { "select_next", "fallback" },
-				["<C-d>"] = { "scroll_documentation_up" },
-				["<C-f>"] = { "scroll_documentation_down" },
-				["<C-w>"] = { "hide" },
+				["<C-d>"] = { "scroll_documentation_up", "fallback" },
+				["<C-f>"] = { "scroll_documentation_down", "fallback" },
+				["<C-w>"] = { "hide", "fallback" },
 				["<Tab>"] = {
 					function(cmp)
 						if cmp.snippet_active({ direction = 1 }) then
