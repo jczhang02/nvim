@@ -13,7 +13,7 @@ Feature checks need the tools for the path being changed.
 The current repository style:
 
 - tabs, width 4, and 120 columns for Lua through `stylua.toml`;
-- LuaJIT runtime and plugin types for lua_ls from lazydev.nvim;
+- LuaJIT runtime globals from `.luarc.json`, which leaves `workspace.library` to lazydev.nvim;
 - one focused plugin spec per file or language integration;
 - Conventional Commits;
 - signed commits when the local Git policy requires them;
