@@ -117,6 +117,18 @@ return {
 				},
 			})
 
+			-- Grammar checks for English prose; settings and code-action commands in config/ltex.lua.
+			local ltex = require("config.ltex")
+			ltex.register_commands()
+			vim.lsp.config("ltex_plus", {
+				-- ltex-ls-plus ships its own JDK; an inherited JAVA_HOME (e.g. a stale java-config
+				-- user VM) would replace it and stop the server from starting.
+				cmd_env = { JAVA_HOME = "" },
+				-- Not gitcommit, text, html, bib, ...: one JVM per prose project is enough.
+				filetypes = { "markdown", "tex" },
+				settings = ltex.settings(),
+			})
+
 			vim.lsp.enable(require("config.settings").lsp_servers)
 
 			vim.diagnostic.config({

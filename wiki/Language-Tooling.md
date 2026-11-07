@@ -36,11 +36,11 @@ may still be available through a project plugin or an ad hoc command.
 | HTML | `html` | `html` | oxfmt | | automatic tag updates |
 | JavaScript | `javascript` | `ts_ls` | oxfmt | | |
 | JSON | `json` | `jsonls` | oxfmt | | |
-| LaTeX | `latex` installed, generic start skipped | `texlab` | `latexindent` | | VimTeX, Zathura, LuaSnip |
+| LaTeX | `latex` installed, generic start skipped | `texlab`, `ltex_plus` | `latexindent` | | VimTeX, Zathura, LuaSnip |
 | BibTeX | VimTeX | `texlab` | `bibtex-tidy` | | LaTeX completion and snippets |
 | Lua | `lua` | `lua_ls` | Stylua | | |
 | Make | `make` | | | | |
-| Markdown | `markdown`, `markdown_inline` | | oxfmt | | render-markdown, snippets, Lemma blog posts |
+| Markdown | `markdown`, `markdown_inline` | `ltex_plus` | oxfmt | | render-markdown, snippets, Lemma blog posts |
 | Python | `python` | `pyright` through Delance, plus Ruff | `ruff_fix`, then `ruff_format` | | debugpy |
 | Regex | `regex` | | | | picker highlighting |
 | Rust | `rust` | rustaceanvim and rust-analyzer | `rustfmt` | | codelldb, crates.nvim |
@@ -69,6 +69,7 @@ then enables the names in `settings.lsp_servers`.
 | `gopls` | gofumpt, placeholders, staticcheck, unused-parameter analysis, type/value hints |
 | `html` | Native defaults |
 | `jsonls` | Native defaults |
+| `ltex_plus` | English grammar (LanguageTool) for Markdown and TeX; spelling and whitespace rules off, since Vim spell covers spelling and the rules misfire on Lemma syntax and CJK text; code actions store entries in `stdpath("data")/ltex` (`lua/config/ltex.lua`) |
 | `lua_ls` | Library from lazydev.nvim (runtime plus required plugins), no telemetry, `vim`/`Snacks` globals, hints available; formatting disabled |
 | `pyright` | Runs `delance-langserver --stdio`, workspace diagnostics, standard checking, library source, inlay capabilities |
 | `ruff` | Error-level logging; owns Python fixes and formatting |
@@ -92,6 +93,8 @@ buffer-local navigation, action, diagnostics, signature, and inlay-hint
 mappings. If `settings.lsp_inlayhints` is true and the client supports hints,
 they are enabled for the buffer. In TeX and BibTeX buffers it skips
 `<leader>li`, `<leader>lr`, and `<leader>lv`, which VimTeX owns there.
+`ltex_plus` receives only the code-action maps, so it keeps buffer maps such as
+the Lemma `gd`.
 
 Diagnostics use:
 

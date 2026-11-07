@@ -13,7 +13,8 @@ M.transparent_background = true
 M.border_style = "single"
 
 M.lsp_inlayhints = false
-M.lsp_servers = { "bashls", "clangd", "gopls", "html", "jsonls", "lua_ls", "pyright", "ruff", "texlab", "ts_ls" }
+M.lsp_servers =
+	{ "bashls", "clangd", "gopls", "html", "jsonls", "ltex_plus", "lua_ls", "pyright", "ruff", "texlab", "ts_ls" }
 M.mason_dap_adapters = { "codelldb" }
 M.treesitter_parsers = {
 	"bash",
